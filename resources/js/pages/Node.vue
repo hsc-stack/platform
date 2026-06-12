@@ -122,7 +122,7 @@ const totalItemsCount = computed(() => {
                                 <span
                                     class="block truncate text-base font-bold text-slate-900 transition-colors group-hover:text-indigo-600"
                                 >
-                                    {{ node.slug }}
+                                    {{ node.name }}
                                 </span>
                                 <span
                                     class="mt-0.5 inline-block text-xs font-semibold text-slate-400 sm:hidden"
