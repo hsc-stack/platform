@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import AppLogo from './AppLogo.vue';
-
 </script>
 
 <template>
@@ -15,7 +14,7 @@ import AppLogo from './AppLogo.vue';
                         class="mt-4 max-w-sm text-sm leading-relaxed text-slate-500"
                     >
                         Empowering the next generation of students with
-                        high-quality, direct, and accessible academic resources.
+                        high quality, direct, and accessible academic resources.
                     </p>
                     <p
                         class="mt-4 hidden text-xs font-medium text-slate-400 md:block"
@@ -51,15 +50,17 @@ import AppLogo from './AppLogo.vue';
                             </li>
                             <li>
                                 <a
-                                    href="#"
+                                    href="https://go.tajimz.xyz/join"
+                                    target="_blank"
                                     class="text-sm font-medium text-slate-600 transition-colors duration-150 hover:text-indigo-600"
                                 >
-                                    Contribute
+                                    Join Our Team
                                 </a>
                             </li>
                             <li>
                                 <a
-                                    href="#"
+                                    href="https://go.tajimz.xyz/community"
+                                    target="_blank"
                                     class="text-sm font-medium text-slate-600 transition-colors duration-150 hover:text-indigo-600"
                                 >
                                     Community
@@ -77,7 +78,8 @@ import AppLogo from './AppLogo.vue';
                         <ul class="mt-5 space-y-3.5">
                             <li>
                                 <a
-                                    href="#"
+                                    href="/privacy-policy"
+                                    target="_blank"
                                     class="text-sm font-medium text-slate-600 transition-colors duration-150 hover:text-indigo-600"
                                 >
                                     Privacy Policy
@@ -85,7 +87,8 @@ import AppLogo from './AppLogo.vue';
                             </li>
                             <li>
                                 <a
-                                    href="#"
+                                    href="/terms-service"
+                                    target="_blank"
                                     class="text-sm font-medium text-slate-600 transition-colors duration-150 hover:text-indigo-600"
                                 >
                                     Terms of Service
