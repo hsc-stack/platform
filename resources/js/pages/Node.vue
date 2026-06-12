@@ -127,7 +127,7 @@ const totalItemsCount = computed(() => {
                                 <span
                                     class="mt-0.5 inline-block text-xs font-semibold text-slate-400 sm:hidden"
                                 >
-                                    {{ node.children_count || 0 }} Materials
+                                    {{ totalItemsCount || 0 }} Materials
                                 </span>
                             </div>
                         </div>
@@ -136,7 +136,7 @@ const totalItemsCount = computed(() => {
                             <span
                                 class="hidden rounded-md border border-slate-200/60 bg-slate-50 px-2.5 py-1 text-xs font-bold text-slate-500 transition-colors group-hover:border-indigo-100/80 group-hover:bg-indigo-50/60 group-hover:text-indigo-600 sm:inline-block"
                             >
-                                {{ node.children_count || 0 }} Materials
+                                {{ totalItemsCount || 0 }} Materials
                             </span>
 
                             <svg
