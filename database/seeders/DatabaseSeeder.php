@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SubjectSeeder::class,
             NodeSeeder::class,
+            ResourceSeeder::class,
         ]);
     }
 }
