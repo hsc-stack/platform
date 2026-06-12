@@ -1,33 +1,11 @@
 <script setup>
 import { ref, computed } from 'vue';
-import {
-    Search,
-    Atom,
-    FlaskConical,
-    Dna,
-    Sigma,
-    Laptop,
-    BookOpen,
-    PenTool,
-    BarChart3,
-} from 'lucide-vue-next';
-import { Link } from '@inertiajs/vue3';
+import SubjectCard from '@/components/SubjectCard.vue';
 
 const props = defineProps({
     subjects: Array,
 });
 
-const icons = {
-    Atom,
-    FlaskConical,
-    Dna,
-    Sigma,
-    Laptop,
-    BookOpen,
-    PenTool,
-    BarChart3,
-    Search,
-};
 const subjects = props.subjects;
 const searchQuery = ref('');
 
@@ -36,6 +14,7 @@ const filteredSubjects = computed(() => {
         subject.name.toLowerCase().includes(searchQuery.value.toLowerCase()),
     );
 });
+
 </script>
 
 <template>
@@ -49,8 +28,9 @@ const filteredSubjects = computed(() => {
         <p
             class="mx-auto mb-8 max-w-md text-sm font-medium text-slate-500 sm:text-base"
         >
-            Premium study materials, curated for HSC students. Fast, clean,
-            and distraction-free.
+            A clean, fast resource repository for HSC students in Bangladesh.
+            Browse notes, practicals, and past papers organized by subject and
+            chapter.
         </p>
 
         <div class="relative mx-auto max-w-md">
@@ -68,59 +48,11 @@ const filteredSubjects = computed(() => {
 
     <main class="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Link
+            <SubjectCard
                 v-for="subject in filteredSubjects"
                 :key="subject.name"
-                :href="subject.slug"
-                class="group relative flex touch-manipulation flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-200 hover:border-indigo-300 hover:shadow-md active:scale-[0.98] sm:active:scale-100"
-            >
-                <div class="flex items-start gap-4 lg:block">
-                    <div
-                        :class="[
-                            subject.tailwind_format,
-                            'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-colors duration-200 lg:mb-5',
-                        ]"
-                    >
-                        <component
-                            :is="icons[subject.icon]"
-                            class="h-5 w-5 stroke-[2.2]"
-                        />
-                    </div>
-
-                    <div class="min-w-0">
-                        <h3
-                            class="truncate text-base font-bold text-slate-900 transition-colors group-hover:text-indigo-600"
-                        >
-                            {{ subject.name }}
-                        </h3>
-                        <p class="mt-0.5 text-xs font-semibold text-slate-400">
-                            {{ subject.nodes_count }} Chapters
-                        </p>
-                    </div>
-                </div>
-
-                <div
-                    class="mt-5 flex items-center justify-between border-t border-slate-100 pt-3 lg:mt-6"
-                >
-                    <span
-                        class="text-xs font-bold text-slate-500 transition-colors group-hover:text-indigo-600"
-                    >
-                        View Materials
-                    </span>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 text-slate-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-indigo-600"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                            clip-rule="evenodd"
-                        />
-                    </svg>
-                </div>
-            </Link>
+                :subject="subject"
+            />
         </div>
 
         <div
