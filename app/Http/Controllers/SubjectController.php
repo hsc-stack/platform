@@ -23,7 +23,7 @@ class SubjectController extends Controller
         $nodes = Node::where('subject_id', $subject->id)
             ->whereNull('parent_id')
             ->orderBy('sort_order')
-            ->withCount('children')
+            ->withCount(['children', 'resources'])
             ->get(['id', 'name', 'slug']);
             
         return Inertia::render('Node', [
