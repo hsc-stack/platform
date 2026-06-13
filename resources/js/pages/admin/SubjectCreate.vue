@@ -1,227 +1,270 @@
 <script setup>
 import { computed } from 'vue';
-import { useForm, Link } from '@inertiajs/vue3';
-import { 
-  Atom, 
-  FlaskConical, 
-  Dna, 
-  Sigma, 
-  Laptop, 
-  BookOpen, 
-  PenTool, 
-  BarChart3, 
-  Search,
-  ArrowLeft,
-  Check
+import { useForm } from '@inertiajs/vue3';
+import {
+    Atom,
+    FlaskConical,
+    Dna,
+    Sigma,
+    Laptop,
+    BookOpen,
+    PenTool,
+    BarChart3,
+    Search,
+    Check,
 } from 'lucide-vue-next';
 
-// Mapping available icons
 const icons = {
-  Atom,
-  FlaskConical,
-  Dna,
-  Sigma,
-  Laptop,
-  BookOpen,
-  PenTool,
-  BarChart3,
-  Search,
+    Atom,
+    FlaskConical,
+    Dna,
+    Sigma,
+    Laptop,
+    BookOpen,
+    PenTool,
+    BarChart3,
+    Search,
 };
 
-// Inertia Form Helper
 const form = useForm({
-  name: '',
-  tailwind_format: 'bg-red-50 text-red-600', // Defaulting to the first preset choice
-  icon: 'BookOpen', 
-  sort_order: 0,
+    name: '',
+    tailwind_format: 'bg-red-50 text-red-600',
+    icon: 'BookOpen',
+    sort_order: 0,
 });
 
-// Fixed preset styling pairings from your requirements
 const tailwindPresets = [
-  'bg-red-50 text-red-600',
-  'bg-red-100 text-red-700',
-  'bg-blue-50 text-blue-600',
-  'bg-blue-100 text-blue-700',
-  'bg-purple-50 text-purple-600',
-  'bg-purple-100 text-purple-700',
-  'bg-emerald-50 text-emerald-600',
-  'bg-emerald-100 text-emerald-700',
-  'bg-amber-50 text-amber-600',
-  'bg-amber-100 text-amber-700',
-  'bg-green-50 text-green-600',
-  'bg-green-100 text-green-700',
+    'bg-red-50 text-red-600',
+    'bg-red-100 text-red-700',
+    'bg-blue-50 text-blue-600',
+    'bg-blue-100 text-blue-700',
+    'bg-purple-50 text-purple-600',
+    'bg-purple-100 text-purple-700',
+    'bg-emerald-50 text-emerald-600',
+    'bg-emerald-100 text-emerald-700',
+    'bg-amber-50 text-amber-600',
+    'bg-amber-100 text-amber-700',
+    'bg-green-50 text-green-600',
+    'bg-green-100 text-green-700',
 ];
 
-// Pure layout styling helpers
-function getPresetClass(preset) {
-  if (form.tailwind_format === preset) {
-    return preset + ' border-slate-900 scale-110 shadow-md';
-  }
-  return preset + ' border-transparent hover:scale-105';
-}
+const activeIconComponent = computed(() => icons[form.icon] || BookOpen);
 
-// Fixed border colors for the unselected soft background circles to look clean
-function getPresetBorder(preset) {
-  if (form.tailwind_format === preset) return '';
-  if (preset.includes('100')) return 'border-slate-200';
-  return 'border-slate-150';
-}
+const goBack = () => {
+    window.history.back();
+};
 
-function getIconClass(iconKey) {
-  if (form.icon === iconKey) {
-    return 'border-blue-600 bg-blue-50 text-blue-600 ring-2 ring-blue-600/10';
-  }
-  return 'border-slate-200 text-slate-600 hover:bg-slate-50';
-}
-
-function getNameInputClass() {
-  if (form.errors.name) {
-    return 'border-rose-500 focus:ring-rose-500/20';
-  }
-  return 'border-slate-300 focus:ring-blue-500/20 focus:border-blue-500';
-}
-
-function getSortInputClass() {
-  if (form.errors.sort_order) {
-    return 'border-rose-500 focus:ring-rose-500/20';
-  }
-  return 'border-slate-300 focus:ring-blue-500/20 focus:border-blue-500';
-}
-
-const activeIconComponent = computed(() => {
-  return icons[form.icon] || BookOpen;
-});
-
-// Submit handled via Inertia
 const submitForm = () => {
-  form.post('/admin/subjects', {
-    preserveScroll: true,
-  });
+    form.post('/admin/subjects', { preserveScroll: true });
 };
 </script>
 
 <template>
-  <!-- Full space container wrapper for integration into parent admin shell layouts -->
-  <div class="w-full min-h-full bg-slate-50 p-6 lg:p-10 flex flex-col justify-start">
-    <div class="w-full bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-10">
-      
-      <!-- Header Area -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-100">
-        <div>
-          <h1 class="text-2xl font-bold text-slate-900">Create New Subject</h1>
-          <p class="text-sm text-slate-500 mt-1">Add a new subject category to the platform management system.</p>
-        </div>
-        <Link 
-          href="/admin/subjects" 
-          class="inline-flex items-center self-start sm:self-center px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition"
+    <div
+        class="flex min-h-full w-full flex-col justify-start bg-slate-50 p-6 lg:p-10"
+    >
+        <div
+            class="w-full rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm md:p-10"
         >
-          <ArrowLeft class="w-4 h-4 mr-2" /> Back to List
-        </Link>
-      </div>
-
-      <!-- Form Main Box -->
-      <form @submit.prevent="submitForm" class="space-y-8">
-        
-        <!-- Field Row: Name and Sort Order Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="md:col-span-2">
-            <label for="name" class="block text-sm font-semibold text-slate-700 mb-1.5">Subject Name</label>
-            <input 
-              v-model="form.name"
-              type="text" 
-              id="name" 
-              placeholder="e.g. Physics..."
-              class="w-full px-4 py-2.5 rounded-lg border transition outline-none"
-              :class="getNameInputClass()"
-            />
-            <p v-if="form.errors.name" class="mt-1 text-sm text-rose-600">{{ form.errors.name }}</p>
-          </div>
-
-          <div>
-            <label for="sort_order" class="block text-sm font-semibold text-slate-700 mb-1.5">Sort Order</label>
-            <input 
-              v-model.number="form.sort_order"
-              type="number" 
-              id="sort_order" 
-              placeholder="0"
-              class="w-full px-4 py-2.5 rounded-lg border transition outline-none"
-              :class="getSortInputClass()"
-            />
-            <p v-if="form.errors.sort_order" class="mt-1 text-sm text-rose-600">{{ form.errors.sort_order }}</p>
-          </div>
-        </div>
-
-        <!-- Visual Theme Selection (Restored Circle Button Style) -->
-        <div>
-          <label class="block text-sm font-semibold text-slate-700 mb-3">Visual Theme Style</label>
-          <div class="flex flex-wrap gap-3">
-            <button 
-              type="button"
-              v-for="preset in tailwindPresets" 
-              :key="preset"
-              @click="form.tailwind_format = preset"
-              class="w-10 h-10 rounded-full flex items-center justify-center border-2 transition focus:outline-none"
-              :class="[getPresetClass(preset), getPresetBorder(preset)]"
+            <div
+                class="mb-8 flex flex-col justify-between gap-4 border-b border-slate-100 pb-6 sm:flex-row sm:items-center"
             >
-              <Check v-if="form.tailwind_format === preset" class="w-4 h-4" />
-            </button>
-          </div>
-          <p v-if="form.errors.tailwind_format" class="mt-1 text-sm text-rose-600">{{ form.errors.tailwind_format }}</p>
-        </div>
-
-        <!-- Icon Grid Selection Grid Layout -->
-        <div>
-          <label class="block text-sm font-semibold text-slate-700 mb-2.5">Subject Icon</label>
-          <div class="grid grid-cols-3 gap-3 sm:grid-cols-5 md:grid-cols-9">
-            <button 
-              type="button"
-              v-for="(iconComponent, iconKey) in icons" 
-              :key="iconKey"
-              @click="form.icon = iconKey"
-              class="p-3.5 rounded-xl border flex flex-col items-center justify-center gap-1.5 transition-all"
-              :class="getIconClass(iconKey)"
-            >
-              <component :is="iconComponent" class="w-5 h-5 shrink-0" />
-              <span class="text-[11px] font-medium tracking-tight truncate max-w-full">{{ iconKey }}</span>
-            </button>
-          </div>
-          <p v-if="form.errors.icon" class="mt-1 text-sm text-rose-600">{{ form.errors.icon }}</p>
-        </div>
-
-        <hr class="border-slate-100 my-4" />
-
-        <!-- Live Layout Preview Widget Dashboard Segment -->
-        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200/60">
-          <span class="text-xs uppercase font-bold tracking-wider text-slate-400 block mb-3.5">Live Dashboard Card Preview</span>
-          <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-slate-100 shadow-sm max-w-sm">
-            <div :class="form.tailwind_format" class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300">
-              <component :is="activeIconComponent" class="w-6 h-6" />
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-900">
+                        Create New Subject
+                    </h1>
+                    <p class="mt-1 text-sm text-slate-500">
+                        Add a new subject category to the platform management
+                        system.
+                    </p>
+                </div>
+                <button
+                    type="button"
+                    @click="goBack"
+                    class="inline-flex items-center self-start rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-200 sm:self-center"
+                >
+                    &larr; Back
+                </button>
             </div>
-            <div class="overflow-hidden">
-              <h4 class="font-bold text-slate-800 truncate">{{ form.name || 'Untitled Subject' }}</h4>
-              <p class="text-xs text-slate-500">0 Chapters</p>
-            </div>
-          </div>
-        </div>
 
-        <!-- Action Control Buttons Frame -->
-        <div class="flex justify-end space-x-3 pt-4 border-t border-slate-100">
-          <Link 
-            href="/admin/subjects"
-            class="px-5 py-2.5 rounded-lg border border-slate-300 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition"
-          >
-            Cancel
-          </Link>
-          <button 
-            type="submit" 
-            :disabled="form.processing"
-            class="px-6 py-2.5 rounded-lg bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-600/20 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {{ form.processing ? 'Saving...' : 'Save Subject' }}
-          </button>
-        </div>
+            <form @submit.prevent="submitForm" class="space-y-8">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+                    <div class="md:col-span-2">
+                        <label
+                            for="name"
+                            class="mb-1.5 block text-sm font-semibold text-slate-700"
+                            >Subject Name</label
+                        >
+                        <input
+                            v-model="form.name"
+                            type="text"
+                            id="name"
+                            placeholder="e.g. Physics..."
+                            class="w-full rounded-lg border px-4 py-2.5 transition outline-none"
+                            :class="
+                                form.errors.name
+                                    ? 'border-rose-500 focus:ring-rose-500/20'
+                                    : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500/20'
+                            "
+                        />
+                        <p
+                            v-if="form.errors.name"
+                            class="mt-1 text-sm text-rose-600"
+                        >
+                            {{ form.errors.name }}
+                        </p>
+                    </div>
 
-      </form>
+                    <div>
+                        <label
+                            for="sort_order"
+                            class="mb-1.5 block text-sm font-semibold text-slate-700"
+                            >Sort Order</label
+                        >
+                        <input
+                            v-model.number="form.sort_order"
+                            type="number"
+                            id="sort_order"
+                            class="w-full rounded-lg border px-4 py-2.5 transition outline-none"
+                            :class="
+                                form.errors.sort_order
+                                    ? 'border-rose-500 focus:ring-rose-500/20'
+                                    : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500/20'
+                            "
+                        />
+                        <p
+                            v-if="form.errors.sort_order"
+                            class="mt-1 text-sm text-rose-600"
+                        >
+                            {{ form.errors.sort_order }}
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <label
+                        class="mb-3 block text-sm font-semibold text-slate-700"
+                        >Visual Theme Style</label
+                    >
+                    <div class="flex flex-wrap gap-3">
+                        <button
+                            type="button"
+                            v-for="preset in tailwindPresets"
+                            :key="preset"
+                            @click="form.tailwind_format = preset"
+                            class="flex h-10 w-10 items-center justify-center rounded-full border-2 transition focus:outline-none"
+                            :class="[
+                                form.tailwind_format === preset
+                                    ? preset +
+                                      ' scale-110 border-slate-900 shadow-md'
+                                    : preset +
+                                      ' border-transparent hover:scale-105' +
+                                      (preset.includes('100')
+                                          ? 'border-slate-200'
+                                          : 'border-slate-150'),
+                            ]"
+                        >
+                            <Check
+                                v-if="form.tailwind_format === preset"
+                                class="h-4 w-4"
+                            />
+                        </button>
+                    </div>
+                    <p
+                        v-if="form.errors.tailwind_format"
+                        class="mt-1 text-sm text-rose-600"
+                    >
+                        {{ form.errors.tailwind_format }}
+                    </p>
+                </div>
+
+                <div>
+                    <label
+                        class="mb-2.5 block text-sm font-semibold text-slate-700"
+                        >Subject Icon</label
+                    >
+                    <div
+                        class="grid grid-cols-3 gap-3 sm:grid-cols-5 md:grid-cols-9"
+                    >
+                        <button
+                            type="button"
+                            v-for="(iconComponent, iconKey) in icons"
+                            :key="iconKey"
+                            @click="form.icon = iconKey"
+                            class="flex flex-col items-center justify-center gap-1.5 rounded-xl border p-3.5 transition-all"
+                            :class="
+                                form.icon === iconKey
+                                    ? 'border-blue-600 bg-blue-50 text-blue-600 ring-2 ring-blue-600/10'
+                                    : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                            "
+                        >
+                            <component
+                                :is="iconComponent"
+                                class="h-5 w-5 shrink-0"
+                            />
+                            <span
+                                class="max-w-full truncate text-[11px] font-medium tracking-tight"
+                                >{{ iconKey }}</span
+                            >
+                        </button>
+                    </div>
+                    <p
+                        v-if="form.errors.icon"
+                        class="mt-1 text-sm text-rose-600"
+                    >
+                        {{ form.errors.icon }}
+                    </p>
+                </div>
+
+                <hr class="my-4 border-slate-100" />
+
+                <div
+                    class="rounded-xl border border-slate-200/60 bg-slate-50 p-5"
+                >
+                    <span
+                        class="mb-3.5 block text-xs font-bold tracking-wider text-slate-400 uppercase"
+                        >Live Dashboard Card Preview</span
+                    >
+                    <div
+                        class="flex max-w-sm items-center space-x-4 rounded-lg border border-slate-100 bg-white p-4 shadow-sm"
+                    >
+                        <div
+                            :class="form.tailwind_format"
+                            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition-all duration-300"
+                        >
+                            <component
+                                :is="activeIconComponent"
+                                class="h-6 w-6"
+                            />
+                        </div>
+                        <div class="overflow-hidden">
+                            <h4 class="truncate font-bold text-slate-800">
+                                {{ form.name || 'Untitled Subject' }}
+                            </h4>
+                            <p class="text-xs text-slate-500">0 Chapters</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="flex justify-end space-x-3 border-t border-slate-100 pt-4"
+                >
+                    <button
+                        type="button"
+                        @click="goBack"
+                        class="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        :disabled="form.processing"
+                        class="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 focus:ring-4 focus:ring-blue-600/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                        {{ form.processing ? 'Saving...' : 'Save Subject' }}
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </template>
