@@ -5,12 +5,14 @@ import { FolderOpen } from 'lucide-vue-next';
 const props = defineProps({
     subject: Object,
     parent: Object,
+    redirect: String,
 });
 
 const form = useForm({
     name: '',
     parent_id: props.parent?.id || null,
     sort_order: 0,
+    redirect: props.redirect,
 });
 
 function getInputClass(hasError) {

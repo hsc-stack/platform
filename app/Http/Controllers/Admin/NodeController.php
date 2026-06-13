@@ -61,7 +61,8 @@ class NodeController extends Controller
 
         return Inertia::render('admin/NodeCreate', [
             'subject' => $subject,
-            'parent' => $parent
+            'parent' => $parent,
+            'redirect' => url()->previous(),
         ]);
     }
 
@@ -72,6 +73,7 @@ class NodeController extends Controller
             'name' => ['required', 'string', 'max:200', 'min:2'],
             'parent_id' => ['nullable', 'integer'],
             'sort_order' => ['nullable', 'integer'],
+            'redirect' => ['nullable', 'string'],
         ]);
 
         $parent = null;
@@ -92,7 +94,7 @@ class NodeController extends Controller
 
         $node->save();
 
-        $redirect = str_replace('/create', '', url()->previous());
+        $redirect = $validated['redirect'] ? $validated['redirect'] : explode('/create', url()->previous())[0];
 
         return redirect($redirect)->with('success', 'Node created successfully.');
     }
