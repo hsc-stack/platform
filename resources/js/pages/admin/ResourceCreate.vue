@@ -61,24 +61,16 @@ const resourceTypes = [
     },
 ];
 
-const requiresFile = computed(() =>
-    ['pdf', 'image'].includes(form.resource_type),
-);
+const requiresFile = computed(() => ['image'].includes(form.resource_type));
 const requiresContent = computed(() =>
     ['note', 'question'].includes(form.resource_type),
 );
-const requiresLink = computed(() => form.resource_type === 'video');
+const requiresLink = computed(() =>
+    ['video', 'pdf'].includes(form.resource_type),
+);
 
 const handleFileSelect = (event) => {
     form.file = event.target.files[0];
-};
-
-const goBack = () => {
-    if (props.redirect) {
-        window.location.href = props.redirect;
-    } else {
-        window.history.back();
-    }
 };
 
 const submitForm = () => {
@@ -113,7 +105,6 @@ const submitForm = () => {
                         structure.
                     </p>
                 </div>
-                
             </div>
 
             <form @submit.prevent="submitForm" class="space-y-6">
@@ -213,8 +204,9 @@ const submitForm = () => {
                     <label
                         for="content_link"
                         class="mb-1.5 block text-sm font-semibold text-slate-700"
-                        >Video URL / Link</label
                     >
+                        {{ form.resource_type === 'pdf' ? 'Resource Link / URL' : 'Video URL / Link' }}
+                    </label>
                     <div class="relative flex items-center">
                         <LinkIcon
                             class="pointer-events-none absolute left-4 h-4 w-4 text-slate-400"
@@ -223,7 +215,11 @@ const submitForm = () => {
                             v-model="form.content"
                             type="url"
                             id="content_link"
-                            placeholder="e.g. https://www.youtube.com/watch?v=... or Vimeo URL"
+                            :placeholder="
+                                form.resource_type === 'pdf' 
+                                    ? 'e.g. https://example.com/document.pdf' 
+                                    : 'e.g. https://www.youtube.com/watch?v=... or Vimeo URL'
+                            "
                             class="w-full rounded-lg border py-2.5 pr-4 pl-11 transition outline-none"
                             :class="
                                 form.errors.content
