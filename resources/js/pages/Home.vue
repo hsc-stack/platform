@@ -8,8 +8,8 @@ import Resource from './Resource.vue';
 const props = defineProps({
     subjects: Array,
     subjectCount : Number,
-    ResourceCount : Number,
-    SiteTraffic : Number,
+    resourceCount : Number,
+    siteTraffic : Number,
 });
 
 const subjects = props.subjects;
@@ -52,7 +52,7 @@ const filteredSubjects = computed(() => {
 
     <RepositoryStas
         :total-subjects="subjectCount"
-        :total-resources="ResourceCount"
-        :total-traffic="SiteTraffic"
+        :total-resources="resourceCount"
+        :total-traffic="siteTraffic"
     />
 </template>

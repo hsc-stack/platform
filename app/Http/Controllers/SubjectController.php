@@ -14,7 +14,10 @@ class SubjectController extends Controller
         $subjects = Subject::orderBy('sort_order', 'asc')->withCount('nodes')->get();
 
         return Inertia::render('Home', [
-            'subjects' => $subjects
+            'subjects' => $subjects,
+            'subjectCount' => $subjects->count(),
+            'resourceCount' => Resource::count(),
+            'siteTraffic' => 500,
         ]);
     }
 
