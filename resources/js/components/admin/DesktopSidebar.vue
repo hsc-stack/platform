@@ -1,8 +1,14 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
+import { LogOut } from 'lucide-vue-next';
 const props = defineProps({
     navigation: Array,
 });
+const handleLogout = () => {
+    if (confirm('Are you sure you want to log out?')) {
+        router.post('/logout');
+    }
+};
 </script>
 
 <template>
@@ -44,8 +50,8 @@ const props = defineProps({
     </nav>
 
     <div class="space-y-3">
-        <Link
-            href="/logout"
+        <button
+            @click="handleLogout"
             class="group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-rose-600 transition-all duration-300 hover:bg-rose-50/60 hover:text-rose-700"
         >
             <span
@@ -60,7 +66,7 @@ const props = defineProps({
             >
                 Logout
             </span>
-        </Link>
+        </button>
 
         <div
             class="border-t border-slate-200/60 px-2 pt-3 text-xs text-slate-400"

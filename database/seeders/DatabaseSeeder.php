@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             SubjectSeeder::class,
             NodeSeeder::class,
             ResourceSeeder::class,
+            AdminSeeder::class,
         ]);
     }
 }
