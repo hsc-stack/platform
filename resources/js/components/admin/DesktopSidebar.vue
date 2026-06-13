@@ -1,0 +1,71 @@
+<script setup>
+import { Link } from '@inertiajs/vue3';
+const props = defineProps({
+    navigation: Array,
+});
+</script>
+
+<template>
+    <nav class="space-y-1">
+        <p
+            class="mb-3 px-3 text-xs font-semibold tracking-wider text-slate-400 uppercase"
+        >
+            Management
+        </p>
+
+        <div
+            v-for="(item, index) in navigation"
+            :key="item.name"
+            class="group/wrapper relative"
+        >
+            <Link
+                :href="item.to"
+                class="group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition-all duration-300 hover:bg-indigo-50/60 hover:text-indigo-600"
+            >
+                <span
+                    class="absolute top-1/4 bottom-1/4 left-0 w-[3px] origin-center scale-y-0 rounded-full bg-indigo-600 transition-transform duration-200 group-hover:scale-y-100"
+                ></span>
+                <component
+                    :is="item.icon"
+                    class="h-4 w-4 text-slate-400 transition-all duration-300 ease-out group-hover:scale-110 group-hover:rotate-[2deg] group-hover:text-indigo-500"
+                    :stroke-width="2"
+                />
+                <span
+                    class="transform transition-transform duration-300 ease-out group-hover:translate-x-0.5"
+                >
+                    {{ item.name }}
+                </span>
+            </Link>
+            <hr
+                v-if="index < navigation.length - 1"
+                class="mx-3 my-1 border-slate-200/60"
+            />
+        </div>
+    </nav>
+
+    <div class="space-y-3">
+        <Link
+            href="/logout"
+            class="group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-rose-600 transition-all duration-300 hover:bg-rose-50/60 hover:text-rose-700"
+        >
+            <span
+                class="absolute top-1/4 bottom-1/4 left-0 w-[3px] origin-center scale-y-0 rounded-full bg-rose-600 transition-transform duration-200 group-hover:scale-y-100"
+            ></span>
+            <LogOut
+                class="h-4 w-4 text-rose-400 transition-all duration-300 ease-out group-hover:scale-110 group-hover:-rotate-[4deg] group-hover:text-rose-500"
+                :stroke-width="2"
+            />
+            <span
+                class="transform transition-transform duration-300 ease-out group-hover:translate-x-0.5"
+            >
+                Logout
+            </span>
+        </Link>
+
+        <div
+            class="border-t border-slate-200/60 px-2 pt-3 text-xs text-slate-400"
+        >
+            Internal Dashboard
+        </div>
+    </div>
+</template>
