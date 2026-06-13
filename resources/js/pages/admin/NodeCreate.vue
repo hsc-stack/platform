@@ -22,8 +22,10 @@ function getInputClass(hasError) {
 const submitForm = () => {
     form.post('/admin/subjects/' + props.subject.id + '/nodes', {
         preserveScroll: true,
-        
     });
+};
+const goBack = () => {
+    window.history.back();
 };
 </script>
 
@@ -138,12 +140,12 @@ const submitForm = () => {
                 <div
                     class="flex justify-end space-x-3 border-t border-slate-100 pt-4"
                 >
-                    <Link
-                        :href="`/admin/subjects/${subject.slug}/nodes`"
+                    <button
+                        @click="goBack"
                         class="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                     >
                         Cancel
-                    </Link>
+                    </button>
                     <button
                         type="submit"
                         :disabled="form.processing"

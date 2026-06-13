@@ -3,8 +3,8 @@ import { computed } from 'vue';
 import { Plus, FolderPlus, ArrowLeft } from 'lucide-vue-next';
 import { Link } from '@inertiajs/vue3';
 import EmptyState from '@/components/EmptyState.vue';
-import ResourceRow from '@/components/ResourceRow.vue';
-import NodeRow from '@/components/NodeRow.vue';
+import ResourceRow from '@/components/admin/ResourceRow.vue';
+import NodeRow from '@/components/admin/NodeRow.vue';
 
 const props = defineProps({
     subject: Object,
@@ -12,7 +12,6 @@ const props = defineProps({
     resources: Array,
     parent: Object,
 });
-
 
 const totalItemsCount = computed(
     () => (props.nodes?.length ?? 0) + (props.resources?.length ?? 0),
@@ -55,7 +54,7 @@ const handleBack = () => {
                     class="rounded-full border border-blue-100 bg-blue-50 px-3 py-1"
                 >
                     <span class="text-xs font-medium text-blue-700">
-                        Total Items: {{ totalItemsCount }}
+                        Total: {{ totalItemsCount }}
                     </span>
                 </div>
 
@@ -90,24 +89,21 @@ const handleBack = () => {
                 <div
                     class="flex shrink-0 items-center justify-between rounded-t-lg border-b border-gray-100 bg-gray-50/70 px-4 py-2.5 text-xs font-semibold tracking-wider text-gray-400 uppercase"
                 >
-                    <span>Name</span>
-                    <span class="hidden sm:inline">Type</span>
+                    <span>Resources</span>
                 </div>
 
                 <div
-                    class="divide-y divide-gray-100 overflow-hidden rounded-b-lg border-x border-b border-gray-100"
+                    class="grid grid-cols-2 gap-4 rounded-b-lg border border-gray-100 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
                 >
                     <NodeRow
                         v-for="node in nodes"
                         :key="`node-${node.id}`"
                         :node="node"
-                        class="transition-colors hover:bg-gray-50/50"
                     />
                     <ResourceRow
                         v-for="resource in resources"
                         :key="`resource-${resource.id}`"
                         :resource="resource"
-                        class="transition-colors hover:bg-gray-50/50"
                     />
                 </div>
             </template>
