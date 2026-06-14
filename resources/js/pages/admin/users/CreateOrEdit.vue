@@ -2,7 +2,7 @@
 import { useForm } from '@inertiajs/vue3';
 import { UserPlus, Loader2, Save } from 'lucide-vue-next';
 
-defineProps({
+const props = defineProps({
     user: Object,
 });
 
