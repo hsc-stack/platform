@@ -17,9 +17,20 @@ class ResourceController extends Controller
         $node = Node::findOrFail($request->node_id);
 
 
-        return Inertia::render('admin/ResourceCreate', [
+        return Inertia::render('admin/ResourceCreateOrEdit', [
             'redirect' => url()->previous(),
             'node' => $node
+        ]);
+    }
+    public function edit(Resource $resource)
+    {
+        $node = $resource->node;
+
+
+        return Inertia::render('admin/ResourceCreateOrEdit', [
+            'redirect' =>  url()->previous(),
+            'node' => $node,
+            'resource' => $resource,
         ]);
     }
 
@@ -52,5 +63,44 @@ class ResourceController extends Controller
         $redirect = $validated['redirect'] ?? explode('/resources', url()->previous())[0];
 
         return redirect($redirect)->with('success', 'Resource created successfully.');
+    }
+
+
+    public function update(Request $request, Resource $resource)
+    {
+
+        $validated = $request->validate([
+            'redirect'      => ['nullable', 'string'],
+            'node_id'       => ['sometimes', 'integer', 'exists:nodes,id'],
+            'resource_type' => ['sometimes', 'in:note,question,pdf,image,video'],
+            'title'         => ['sometimes', 'string', 'max:100', 'min:2'],
+            'content'       => ['sometimes', 'nullable', 'string'],
+            'file'          => ['sometimes', 'nullable', 'file', 'max:10000', 'mimes:pdf,jpg,jpeg,png,mp4'],
+        ]);
+
+        if ($request->hasFile('file')) {
+            // Delete old file if exists
+            if ($resource->file_url) {
+                $oldPath = str_replace('/storage/', '', parse_url($resource->file_url, PHP_URL_PATH));
+                Storage::disk('public')->delete($oldPath);
+            }
+
+            $type    = $validated['resource_type'] ?? $resource->resource_type;
+            $path    = $request->file('file')->store("resources/{$type}s", 'public');
+            $resource->file_url = Storage::url($path);
+        }
+
+        if (isset($validated['node_id']))       $resource->node_id       = $validated['node_id'];
+        if (isset($validated['resource_type'])) $resource->resource_type = $validated['resource_type'];
+        if (isset($validated['title']))         $resource->title         = $validated['title'];
+
+        if (array_key_exists('content', $validated)) {
+            $resource->content = $validated['content'];
+        }
+
+        $resource->save();
+        $redirect = $validated['redirect'] ?? "/admin/subjects";
+
+        return redirect($redirect)->with('success', 'Resource updated successfully.');
     }
 }

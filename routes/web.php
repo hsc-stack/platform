@@ -30,7 +30,9 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
     Route::get('/subjects/{subject:slug}/nodes/{path?}', [AdminNodeController::class, 'show'])->name('nodes.index')->where('path', '.*');
 
     Route::get('/resources/create', [AdminResourceController::class, 'create']);
+    Route::get('/resources/edit/{resource}', [AdminResourceController::class, 'edit']);
     Route::post('/resources', [AdminResourceController::class, 'store']);
+    Route::post('/resources/{resource}/patch', [AdminResourceController::class, 'update']);
 });
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');

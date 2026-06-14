@@ -15,13 +15,15 @@ import {
 const props = defineProps({
     redirect: String,
     node: Object,
+    resource: Object,
 });
+console.log(props.redirect);
 
 const form = useForm({
-    redirect: props.redirect || '/admin/subjects',
-    resource_type: 'pdf',
-    title: '',
-    content: '',
+    redirect: props?.redirect || '/',
+    resource_type: props.resource?.resource_type || 'pdf',
+    title: props.resource?.title || '',
+    content: props.resource?.content || '',
     file: null,
     node_id: props.node.id,
 });
@@ -79,10 +81,15 @@ const submitForm = () => {
         form.file = null;
     }
 
-    form.post('/admin/resources', {
-        forceFormData: true,
-        preserveScroll: true,
-    });
+    if (props.resource) {
+        form.post(`/admin/resources/${props.resource.id}/patch`, {
+            forceFormData: true,
+        });
+    } else {
+        form.post('/admin/resources', {
+            forceFormData: true,
+        });
+    }
 };
 </script>
 
@@ -98,7 +105,7 @@ const submitForm = () => {
             >
                 <div>
                     <h1 class="text-2xl font-bold text-slate-900">
-                        Add New Resource
+                        {{ props.resource ? 'Edit' : 'Add New' }} Resource
                     </h1>
                     <p class="mt-1 text-sm text-slate-500">
                         Upload assets or link content for the curriculum
@@ -205,7 +212,11 @@ const submitForm = () => {
                         for="content_link"
                         class="mb-1.5 block text-sm font-semibold text-slate-700"
                     >
-                        {{ form.resource_type === 'pdf' ? 'Resource Link / URL' : 'Video URL / Link' }}
+                        {{
+                            form.resource_type === 'pdf'
+                                ? 'Resource Link / URL'
+                                : 'Video URL / Link'
+                        }}
                     </label>
                     <div class="relative flex items-center">
                         <LinkIcon
@@ -216,8 +227,8 @@ const submitForm = () => {
                             type="url"
                             id="content_link"
                             :placeholder="
-                                form.resource_type === 'pdf' 
-                                    ? 'e.g. https://example.com/document.pdf' 
+                                form.resource_type === 'pdf'
+                                    ? 'e.g. https://example.com/document.pdf'
                                     : 'e.g. https://www.youtube.com/watch?v=... or Vimeo URL'
                             "
                             class="w-full rounded-lg border py-2.5 pr-4 pl-11 transition outline-none"
