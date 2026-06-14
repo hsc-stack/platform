@@ -1,3 +1,6 @@
+[website]: https://hscstack.mvp.bd
+[join]: https://hscstack.mvp.bd/join
+
 # HSCStack 📚
 
 > A curated resource platform for HSC students of Bangladesh — built by members, for everyone.
@@ -42,7 +45,7 @@ Browsing is open to everyone. But to **contribute**, you need to be an HSCStack 
 
 ### For Students (Browsing)
 
-1. Visit [HSCStack](https://hscstack.mvp.com) — no account needed.
+1. Visit [HSCStack][website] — no account needed.
 2. Pick your subject and chapter.
 3. Browse, read, or download any resource freely.
 
@@ -50,7 +53,7 @@ Browsing is open to everyone. But to **contribute**, you need to be an HSCStack 
 
 Only HSCStack members can upload resources. To become a member:
 
-1. Join at 👉 **[hscstack.mvp.com/join](https://hscstack.mvp.com/join)**
+1. Join at 👉 **[hscstack.mvp.com/join][join]**
 2. Once accepted, log in and go to the relevant subject and chapter.
 3. Upload your resource — add a title, type, and short description.
 4. Your contribution goes live after a quick admin review.
@@ -74,7 +77,7 @@ Only HSCStack members can upload resources. To become a member:
 
 HSCStack is not open for general pull requests. To contribute code, you must be a **core developer** on the team.
 
-To apply, join via 👉 **[hscstack.mvp.com/join](https://hscstack.mvp.com/join)** — once your application is reviewed and accepted, we'll onboard you to the codebase.
+To apply, join via 👉 **[hscstack.mvp.com/join][join]** — once your application is reviewed and accepted, we'll onboard you to the codebase.
 
 Once you're a core developer:
 
