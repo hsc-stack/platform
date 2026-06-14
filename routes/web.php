@@ -5,6 +5,7 @@
     use App\Http\Controllers\Admin\NodeController as AdminNodeController;
     use App\Http\Controllers\Admin\ResourceController as AdminResourceController;
     use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
+    use App\Http\Controllers\Admin\UserController as AdminUserController;
     use App\Http\Controllers\NodeController;
     use App\Http\Controllers\ResourceController;
     use App\Http\Controllers\SubjectController;
@@ -15,7 +16,7 @@
     Route::inertia('/join', 'platform/JoinTeam');
     Route::inertia('/about-us', 'platform/AboutUs');
 
-    Route::prefix('admin')->middleware(['auth', 'verified', 'role:manager|admin'])->name('admin.')->group(function () {
+    Route::prefix('admin')->middleware(['auth', 'verified', 'role:manager|admin|editor'])->name('admin.')->group(function () {
 
         Route::get('/', [DashboardController::class, 'index']);
         Route::get('/subjects', [AdminSubjectController::class, 'index'])->name("subjects.index");
@@ -27,6 +28,10 @@
 
         Route::get('/resources/create', [AdminResourceController::class, 'create']);
         Route::get('/resources/edit/{resource}', [AdminResourceController::class, 'edit']);
+        
+        Route::get('/users', [AdminUserController::class, 'index'])->name("users.index");
+        Route::get('/users/create', [AdminUserController::class, 'create']);
+        Route::get('/users/edit/{user}', [AdminUserController::class, 'edit']);
 
         Route::get('/subjects/{subject:slug}/nodes/{path?}', [AdminNodeController::class, 'show'])->name('nodes.index')->where('path', '.*');
     });
@@ -47,6 +52,10 @@
         Route::delete('/resources/{resource}', [AdminResourceController::class, 'destroy']);
         Route::delete('/subjects/{subject}', [AdminSubjectController::class, 'destroy']);
         Route::delete('/nodes/{node}', [AdminNodeController::class, 'destroy']);
+        Route::delete('/users/{user}', [AdminUserController::class, 'destroy']);
+
+        Route::post('/users', [AdminUserController::class, 'store'])->name("admin.users.store");
+        Route::patch('/users/{user}', [AdminUserController::class, 'update'])->name("admin.users.update");
     });
 
 
