@@ -59,9 +59,20 @@ class NodeController extends Controller
                 ->firstOrFail();
         }
 
-        return Inertia::render('admin/NodeCreate', [
+        return Inertia::render('admin/NodeCreateOrEdit', [
             'subject' => $subject,
             'parent' => $parent,
+            'redirect' => url()->previous(),
+        ]);
+    }
+
+    public function edit(Subject $subject, Node $node)
+    {
+        abort_if($node->subject_id !== $subject->id, 404);
+        return Inertia::render('admin/NodeCreateOrEdit', [
+            'subject' => $subject,
+            'node' => $node,
+            'parent' => $node->parent,
             'redirect' => url()->previous(),
         ]);
     }
@@ -97,5 +108,42 @@ class NodeController extends Controller
         $redirect = $validated['redirect'] ? $validated['redirect'] : explode('/create', url()->previous())[0];
 
         return redirect($redirect)->with('success', 'Node created successfully.');
+    }
+    public function update(Request $request, Subject $subject, Node $node)
+    {
+        $validated = $request->validate([
+            'name'       => ['sometimes', 'required', 'string', 'max:200', 'min:2'],
+            'parent_id'  => ['sometimes', 'nullable', 'integer'],
+            'sort_order' => ['sometimes', 'nullable', 'integer'],
+            'redirect'   => ['nullable', 'string'],
+        ]);
+
+        if (array_key_exists('parent_id', $validated)) {
+            $parent = null;
+
+            if (!empty($validated['parent_id'])) {
+                $parent = Node::where('id', $validated['parent_id'])
+                    ->where('subject_id', $subject->id)
+                    ->where('id', '!=', $node->id)
+                    ->firstOrFail();
+            }
+
+            $node->parent_id = $parent?->id;
+        }
+
+        if (array_key_exists('name', $validated)) {
+            $node->name = $validated['name'];
+            $node->slug = Str::slug($validated['name']);
+        }
+
+        if (array_key_exists('sort_order', $validated)) {
+            $node->sort_order = $validated['sort_order'] ?? 0;
+        }
+
+        $node->save();
+
+        $redirect = $validated['redirect'] ?? explode('/edit', url()->previous())[0];
+
+        return redirect($redirect)->with('success', 'Node updated successfully.');
     }
 }

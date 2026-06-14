@@ -22,7 +22,9 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
     Route::post('/subjects', [AdminSubjectController::class, 'store'])->name("subjects.store");
 
     Route::get('/subjects/{subject:slug}/nodes/create', [AdminNodeController::class, 'create'])->name('nodes.create');
+    Route::get('/subjects/{subject}/nodes/edit/{node}', [AdminNodeController::class, 'edit'])->name('nodes.edit');
     Route::post('/subjects/{subject}/nodes', [AdminNodeController::class, 'store'])->name('nodes.store');
+    Route::patch('/subjects/{subject}/nodes/{node}', [AdminNodeController::class, 'update'])->name('nodes.patch');
     Route::get('/subjects/{subject:slug}/nodes/{path?}', [AdminNodeController::class, 'show'])->name('nodes.index')->where('path', '.*');
 
     Route::get('/resources/create', [AdminResourceController::class, 'create']);

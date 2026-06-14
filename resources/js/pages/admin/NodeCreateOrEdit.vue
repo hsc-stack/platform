@@ -1,17 +1,18 @@
 <script setup>
-import { useForm, Link } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import { FolderOpen } from 'lucide-vue-next';
 
 const props = defineProps({
     subject: Object,
     parent: Object,
     redirect: String,
+    node: Object,
 });
 
 const form = useForm({
-    name: '',
-    parent_id: props.parent?.id || null,
-    sort_order: 0,
+    name: props.node?.name || '',
+    parent_id: props.node?.parent_id || props.parent?.id || null,
+    sort_order: props.node?.sort_order ?? 0,
     redirect: props.redirect,
 });
 
@@ -22,10 +23,20 @@ function getInputClass(hasError) {
 }
 
 const submitForm = () => {
-    form.post('/admin/subjects/' + props.subject.id + '/nodes', {
-        preserveScroll: true,
-    });
+    if (props.node) {
+        form.patch(
+            '/admin/subjects/' + props.subject.id + '/nodes/' + props.node.id,
+            {
+                preserveScroll: true,
+            },
+        );
+    } else {
+        form.post('/admin/subjects/' + props.subject.id + '/nodes', {
+            preserveScroll: true,
+        });
+    }
 };
+
 const goBack = () => {
     window.history.back();
 };
@@ -43,7 +54,7 @@ const goBack = () => {
             >
                 <div>
                     <h1 class="text-2xl font-bold text-slate-900">
-                        Create Folder
+                        {{ props.node ? 'Edit Folder' : 'Create Folder' }}
                     </h1>
                     <p class="mt-1 text-sm text-slate-500">
                         Subject:
@@ -68,7 +79,7 @@ const goBack = () => {
                             v-if="props.parent?.id"
                             class="text-sm text-slate-700"
                         >
-                            You are creating a
+                            You are {{ props.node ? 'editing' : 'creating' }} a
                             <span class="font-semibold text-blue-700"
                                 >sub-folder</span
                             >
@@ -80,7 +91,7 @@ const goBack = () => {
                             </span>
                         </p>
                         <p v-else class="text-sm text-slate-700">
-                            You are creating a
+                            You are {{ props.node ? 'editing' : 'creating' }} a
                             <span class="font-semibold text-blue-700"
                                 >top-level folder</span
                             >
@@ -153,7 +164,7 @@ const goBack = () => {
                         :disabled="form.processing"
                         class="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 focus:ring-4 focus:ring-blue-600/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                        {{ form.processing ? 'Saving...' : 'Create Folder' }}
+                        {{ form.processing ? 'Saving...' : props.node ? 'Save Changes' : 'Create Folder' }}
                     </button>
                 </div>
             </form>
