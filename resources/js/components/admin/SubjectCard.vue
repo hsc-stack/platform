@@ -38,7 +38,7 @@ const icons = {
             class="absolute right-2 top-2 z-10 opacity-0 transition-opacity duration-150 group-hover:opacity-100"
         >
             <Link
-                :href="`/admin/subjects/${subject.slug}/edit`"
+                :href="`/admin/subjects/edit/${subject.id}`"
                 class="inline-flex h-6 items-center gap-1 rounded-md border border-slate-200 bg-white px-2 py-0.5 text-[11px] font-medium text-slate-500 shadow-sm transition-colors hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600"
                 title="Edit Subject"
             >

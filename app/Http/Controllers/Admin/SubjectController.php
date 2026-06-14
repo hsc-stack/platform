@@ -22,7 +22,14 @@ class SubjectController extends Controller
 
     public function create()
     {
-        return Inertia::render('admin/SubjectCreate');
+        return Inertia::render('admin/SubjectCreateOrEdit');
+    }
+
+    public function edit(Subject $subject)
+    {
+        return Inertia::render('admin/SubjectCreateOrEdit', [
+            'subject' => $subject
+        ]);
     }
 
 
@@ -48,4 +55,34 @@ class SubjectController extends Controller
         return redirect()->route('admin.subjects.index');
     }
 
+    public function update(Request $request, Subject $subject)
+    {
+        $validated = $request->validate([
+            'name'            => ['sometimes', 'string', 'max:100', 'min:3'],
+            'tailwind_format' => ['sometimes', 'string', 'max:100'],
+            'icon'            => ['sometimes', 'string', 'max:50'],
+            'sort_order'      => ['sometimes', 'nullable', 'integer'],
+        ]);
+
+        if (isset($validated['name'])) {
+            $subject->name = $validated['name'];
+            $subject->slug = Str::slug($validated['name']);
+        }
+
+        if (isset($validated['tailwind_format'])) {
+            $subject->tailwind_format = $validated['tailwind_format'];
+        }
+
+        if (isset($validated['icon'])) {
+            $subject->icon = $validated['icon'];
+        }
+
+        if (array_key_exists('sort_order', $validated)) {
+            $subject->sort_order = $validated['sort_order'] ?? 0;
+        }
+
+        $subject->save();
+
+        return redirect()->route('admin.subjects.index');
+    }
 }

@@ -19,6 +19,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->name('admin.')->group(
 
     Route::get('/subjects', [AdminSubjectController::class, 'index'])->name("subjects.index");
     Route::get('/subjects/create', [AdminSubjectController::class, 'create'])->name("subjects.create");
+    Route::get('/subjects/edit/{subject}', [AdminSubjectController::class, 'edit'])->name("subjects.edit");
+    Route::patch('/subjects/edit/{subject}', [AdminSubjectController::class, 'update'])->name("subjects.update");
     Route::post('/subjects', [AdminSubjectController::class, 'store'])->name("subjects.store");
 
     Route::get('/subjects/{subject:slug}/nodes/create', [AdminNodeController::class, 'create'])->name('nodes.create');

@@ -25,12 +25,16 @@ const icons = {
     BarChart3,
     Search,
 };
+const props = defineProps({
+    subject: Object,
+});
+console.log(props?.subject);
 
 const form = useForm({
-    name: '',
-    tailwind_format: 'bg-red-50 text-red-600',
-    icon: 'BookOpen',
-    sort_order: 0,
+    name: props.subject?.name || '',
+    tailwind_format: props.subject?.tailwind_format || 'bg-red-50 text-red-600',
+    icon: props.subject?.icon || 'BookOpen',
+    sort_order: props.subject?.sort_order || 0,
 });
 
 const tailwindPresets = [
@@ -55,7 +59,13 @@ const goBack = () => {
 };
 
 const submitForm = () => {
-    form.post('/admin/subjects', { preserveScroll: true });
+    if (props.subject) {
+        form.patch(`/admin/subjects/edit/${props.subject.id}`, {
+            preserveScroll: true,
+        });
+    } else {
+        form.post('/admin/subjects', { preserveScroll: true });
+    }
 };
 </script>
 
@@ -71,11 +81,14 @@ const submitForm = () => {
             >
                 <div>
                     <h1 class="text-2xl font-bold text-slate-900">
-                        Create New Subject
+                        {{ props.subject ? 'Edit' : 'Create' }} New Subject
                     </h1>
                     <p class="mt-1 text-sm text-slate-500">
-                        Add a new subject category to the platform management
-                        system.
+                        {{
+                            props.subject
+                                ? 'Update the subject details below.'
+                                : 'Add a new subject category to the platform.'
+                        }}
                     </p>
                 </div>
                 <button
@@ -241,7 +254,10 @@ const submitForm = () => {
                             <h4 class="truncate font-bold text-slate-800">
                                 {{ form.name || 'Untitled Subject' }}
                             </h4>
-                            <p class="text-xs text-slate-500">0 Chapters</p>
+                            <p class="text-xs text-slate-500">
+                                {{ props.subject?.children_count ?? 0 }}
+                                Chapters
+                            </p>
                         </div>
                     </div>
                 </div>
