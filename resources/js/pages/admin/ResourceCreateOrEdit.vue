@@ -17,7 +17,6 @@ const props = defineProps({
     node: Object,
     resource: Object,
 });
-console.log(props.redirect);
 
 const form = useForm({
     redirect: props?.redirect || '/',
@@ -28,7 +27,6 @@ const form = useForm({
     node_id: props.node.id,
 });
 
-console.log(props.redirect);
 
 const resourceTypes = [
     {

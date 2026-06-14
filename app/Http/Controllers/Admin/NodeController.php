@@ -35,6 +35,7 @@ class NodeController extends Controller
             ->whereNull('parent_id')
             ->where('slug', $slugs[0])
             ->first();
+        if (!$node) abort(404);
 
         foreach (array_slice($slugs, 1) as $slug) {
             $node = $node->children()->where('slug', $slug)->first();
@@ -100,7 +101,20 @@ class NodeController extends Controller
         $node->subject_id = $subject->id;
         $node->parent_id = $parent?->id;
         $node->name = $validated['name'];
-        $node->slug = Str::slug($validated['name']);
+
+        $slug = Str::slug($validated['name']);
+
+        $exists = Node::where('parent_id', $parent?->id)
+            ->where('slug', $slug)
+            ->exists();
+
+        if ($exists) {
+            return back()->withErrors([
+                'name' => 'Folder already exists in this location.',
+            ])->withInput();
+        }
+
+        $node->slug = $slug;
         $node->sort_order = $validated['sort_order'] ?? 0;
 
         $node->save();
@@ -133,7 +147,25 @@ class NodeController extends Controller
 
         if (array_key_exists('name', $validated)) {
             $node->name = $validated['name'];
-            $node->slug = Str::slug($validated['name']);
+
+            $slug = Str::slug($validated['name']);
+
+            $parentId = array_key_exists('parent_id', $validated)
+                ? $validated['parent_id']
+                : $node->parent_id;
+
+            $exists = Node::where('parent_id', $parentId)
+                ->where('slug', $slug)
+                ->where('id', '!=', $node->id)
+                ->exists();
+
+            if ($exists) {
+                return back()->withErrors([
+                    'name' => 'Folder already exists in this location.',
+                ])->withInput();
+            }
+
+            $node->slug = $slug;
         }
 
         if (array_key_exists('sort_order', $validated)) {

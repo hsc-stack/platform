@@ -10,7 +10,6 @@ const { resource } = defineProps({
 <template>
     <Link
         :href="`/resources/${resource.id}`"
-        target="_blank"
         class="group relative flex cursor-pointer touch-manipulation items-center justify-between bg-white px-5 py-4.5 transition-all duration-200 hover:bg-slate-50/40 active:scale-[0.995] sm:px-6 sm:active:scale-100"
     >
         <div class="flex min-w-0 items-center gap-4">
@@ -30,7 +29,7 @@ const { resource } = defineProps({
                     class="h-5 w-5 stroke-[2.2]"
                 />
                 <Book
-                    v-else-if="resource.resource_type == 'text'"
+                    v-else-if="resource.resource_type == 'note'"
                     class="h-5 w-5 stroke-[2.2]"
                 />
                 <File v-else class="h-5 w-5 stroke-[2.2]" />

@@ -29,7 +29,7 @@ const filteredSubjects = computed(() => {
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <SubjectCard
                 v-for="subject in filteredSubjects"
-                :key="subject.name"
+                :key="subject.id"
                 :subject="subject"
             />
         </div>

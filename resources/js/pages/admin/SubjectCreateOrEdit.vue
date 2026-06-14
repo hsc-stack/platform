@@ -28,7 +28,6 @@ const icons = {
 const props = defineProps({
     subject: Object,
 });
-console.log(props?.subject);
 
 const form = useForm({
     name: props.subject?.name || '',
