@@ -1,14 +1,14 @@
-<script setup>
-import NavBar from '@/components/NavBar.vue';
-import DesktopSidebar from '@/components/admin/DesktopSidebar.vue';
-import MobileSideBar from '@/components/admin/MobileSideBar.vue';
-
-import { ref } from 'vue';
+<script setup lang="ts">
 import {
     LayoutDashboard,
     Users,
     BookOpen,
 } from 'lucide-vue-next';
+import { ref } from 'vue';
+import DesktopSidebar from '@/components/admin/DesktopSidebar.vue';
+import MobileSideBar from '@/components/admin/MobileSideBar.vue';
+import NavBar from '@/components/NavBar.vue';
+
 
 const isMobileSidebarOpen = ref(false);
 

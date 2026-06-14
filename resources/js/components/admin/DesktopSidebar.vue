@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { Link, router } from '@inertiajs/vue3';
 import { LogOut } from 'lucide-vue-next';
-const props = defineProps({
+defineProps({
     navigation: Array,
 });
 const handleLogout = () => {

@@ -2,7 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import AppLogo from './AppLogo.vue';
 
-const props = defineProps({
+defineProps({
     isAdmin: {
         type: Boolean,
         default: false,

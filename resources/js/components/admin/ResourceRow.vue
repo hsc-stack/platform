@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { Book, File, FileArchive, FileImage, FileVideo, Pencil } from 'lucide-vue-next';
 

@@ -1,5 +1,5 @@
-<script setup>
-import { ref, computed } from 'vue';
+<script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
 import { 
     ArrowLeft, 
     Megaphone, 
@@ -8,7 +8,7 @@ import {
     MessageSquareShare,
     Award
 } from 'lucide-vue-next';
-import { Link } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
 
 const roles = [
     {

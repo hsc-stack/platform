@@ -1,10 +1,10 @@
-<script setup>
-import { computed } from 'vue';
-import { Plus, FolderPlus, ArrowLeft } from 'lucide-vue-next';
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import EmptyState from '@/components/EmptyState.vue';
-import ResourceRow from '@/components/admin/ResourceRow.vue';
+import { Plus, FolderPlus, ArrowLeft } from 'lucide-vue-next';
+import { computed } from 'vue';
 import NodeRow from '@/components/admin/NodeRow.vue';
+import ResourceRow from '@/components/admin/ResourceRow.vue';
+import EmptyState from '@/components/EmptyState.vue';
 
 const props = defineProps({
     subject: Object,

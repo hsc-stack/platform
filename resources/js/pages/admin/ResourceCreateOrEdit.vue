@@ -1,8 +1,6 @@
-<script setup>
-import { computed } from 'vue';
+<script setup lang="ts">
 import { Link, useForm } from '@inertiajs/vue3';
 import {
-    ArrowLeft,
     FileText,
     HelpCircle,
     File,
@@ -11,6 +9,7 @@ import {
     Upload,
     Link as LinkIcon,
 } from 'lucide-vue-next';
+import { computed } from 'vue';
 
 const props = defineProps({
     redirect: String,

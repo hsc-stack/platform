@@ -1,5 +1,4 @@
-<script setup>
-import { computed } from 'vue';
+<script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
 import {
     Atom,
@@ -13,6 +12,7 @@ import {
     Search,
     Check,
 } from 'lucide-vue-next';
+import { computed } from 'vue';
 
 const icons = {
     Atom,

@@ -1,6 +1,6 @@
-<script setup>
-import { Shield, ArrowLeft, Eye, Lock, Cookie } from 'lucide-vue-next';
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
+import { Shield, ArrowLeft, Eye, Lock, Cookie } from 'lucide-vue-next';
 </script>
 
 <template>

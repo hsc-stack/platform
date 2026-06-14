@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
 import {
     ArrowLeft,
     Github,
     Facebook,
 } from 'lucide-vue-next';
-import { Link } from '@inertiajs/vue3';
 
 const team = [
     {

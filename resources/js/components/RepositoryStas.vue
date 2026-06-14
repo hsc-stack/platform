@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -20,6 +20,7 @@ const formatTraffic = computed(() => {
     if (props.totalTraffic >= 1000) {
         return (props.totalTraffic / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
     }
+
     return props.totalTraffic;
 });
 </script>

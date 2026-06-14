@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { X, LogOut } from 'lucide-vue-next';
 

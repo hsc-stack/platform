@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { LayoutGrid, Sparkles } from 'lucide-vue-next';
 </script>
 

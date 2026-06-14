@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 
 import {
@@ -13,8 +13,7 @@ import {
     BarChart3,
     Pencil,
 } from 'lucide-vue-next';
-
-const { subject, admin } = defineProps({
+defineProps({
     subject: Object,
 });
 

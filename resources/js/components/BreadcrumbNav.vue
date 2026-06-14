@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { ChevronRight, Home } from 'lucide-vue-next';
 import { computed } from 'vue';

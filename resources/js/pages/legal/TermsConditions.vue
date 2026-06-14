@@ -1,6 +1,6 @@
-<script setup>
-import { Scale, ArrowLeft, FileText, HelpCircle, AlertCircle } from 'lucide-vue-next';
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
+import { Scale, ArrowLeft, FileText, HelpCircle, AlertCircle } from 'lucide-vue-next';
 </script>
 
 <template>

@@ -1,10 +1,9 @@
-<script setup>
-import SubjectCard from '@/components/admin/SubjectCard.vue';
-import EmptyState from '@/components/EmptyState.vue';
+<script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import { Plus } from 'lucide-vue-next';
-
-const props = defineProps({
+import SubjectCard from '@/components/admin/SubjectCard.vue';
+import EmptyState from '@/components/EmptyState.vue';
+defineProps({
     subjects: {
         type: Array,
         default: () => [],

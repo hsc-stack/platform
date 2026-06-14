@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 
-import EmptyState from '@/components/EmptyState.vue';
-import ResourceRow from '@/components/ResourceRow.vue';
-import NodeRow from '@/components/NodeRow.vue';
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue';
+import EmptyState from '@/components/EmptyState.vue';
+import NodeRow from '@/components/NodeRow.vue';
+import ResourceRow from '@/components/ResourceRow.vue';
 
 const props = defineProps({
     subject: Object,
