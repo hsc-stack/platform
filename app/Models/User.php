@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property int $id
@@ -33,6 +34,8 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    use HasRoles;
+
     protected function casts(): array
     {
         return [
