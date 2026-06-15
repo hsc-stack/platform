@@ -9,7 +9,7 @@ const props = defineProps({
     subjects: Array,
     subjectCount: Number,
     resourceCount: Number,
-    siteTraffic: Number,
+    contributorCount: Number,
     notice: Object,
 });
 
