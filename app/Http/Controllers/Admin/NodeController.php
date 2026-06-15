@@ -67,11 +67,11 @@ class NodeController extends Controller
         ]);
     }
 
-    public function edit(Subject $subject, Node $node)
+    public function edit(Node $node)
     {
 
         return Inertia::render('admin/NodeCreateOrEdit', [
-            'subject' => $subject,
+            'subject' => $node->subject,
             'node' => $node,
             'parent' => $node->parent,
             'redirect' => url()->previous(),
