@@ -2,7 +2,6 @@
 import { Link, useForm } from '@inertiajs/vue3';
 import {
     FileText,
-    HelpCircle,
     File,
     Image as ImageIcon,
     Video,
@@ -41,12 +40,6 @@ const resourceTypes = [
         color: 'text-amber-600 bg-amber-50 border-amber-200',
     },
     {
-        id: 'question',
-        name: 'Question/Quiz',
-        icon: HelpCircle,
-        color: 'text-purple-600 bg-purple-50 border-purple-200',
-    },
-    {
         id: 'image',
         name: 'Image',
         icon: ImageIcon,
@@ -62,7 +55,7 @@ const resourceTypes = [
 
 const requiresFile = computed(() => ['image'].includes(form.resource_type));
 const requiresContent = computed(() =>
-    ['note', 'question'].includes(form.resource_type),
+    ['note', 'question', 'image'].includes(form.resource_type),
 );
 const requiresLink = computed(() =>
     ['video', 'pdf'].includes(form.resource_type),
@@ -187,7 +180,7 @@ const submitForm = () => {
                     <textarea
                         v-model="form.content"
                         id="content"
-                        rows="6"
+                        rows="2"
                         placeholder="Type your notes or questions details right here..."
                         class="w-full rounded-lg border px-4 py-2.5 font-sans transition outline-none"
                         :class="
@@ -277,7 +270,7 @@ const submitForm = () => {
                             >
                                 <Upload class="h-5 w-5" />
                             </div>
-                            <span class="text-sm font-medium text-slate-700">
+                            <span class="text-sm font-medium text-red-700">
                                 {{
                                     form.file
                                         ? form.file.name
