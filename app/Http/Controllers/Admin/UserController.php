@@ -31,8 +31,10 @@ class UserController extends Controller
 
             'image'       => ['nullable', 'string', 'max:255'],
             'about'       => ['nullable', 'string'],
+            'title'       => ['nullable', 'string'],
             'institution' => ['nullable', 'string', 'max:255'],
             'facebook'    => ['nullable', 'string', 'max:255'],
+            'instagram'    => ['nullable', 'string', 'max:255'],
             'github'      => ['nullable', 'string', 'max:255'],
         ]);
 
@@ -45,8 +47,10 @@ class UserController extends Controller
 
         $user->image = $validated['image'] ?? null;
         $user->about = $validated['about'] ?? null;
+        $user->title = $validated['title'] ?? null;
         $user->institution = $validated['institution'] ?? null;
         $user->facebook = $validated['facebook'] ?? null;
+        $user->instagram = $validated['instagram'] ?? null;
         $user->github = $validated['github'] ?? null;
 
         $user->save();
@@ -74,8 +78,10 @@ class UserController extends Controller
 
             'image'       => ['sometimes', 'nullable', 'string', 'max:255'],
             'about'       => ['sometimes', 'nullable', 'string'],
+            'title'       => ['sometimes', 'nullable', 'string'],
             'institution' => ['sometimes', 'nullable', 'string', 'max:255'],
             'facebook'    => ['sometimes', 'nullable', 'string', 'max:255'],
+            'instagram'    => ['sometimes', 'nullable', 'string', 'max:255'],
             'github'      => ['sometimes', 'nullable', 'string', 'max:255'],
         ]);
 
@@ -98,6 +104,9 @@ class UserController extends Controller
         if (array_key_exists('about', $validated)) {
             $user->about = $validated['about'];
         }
+        if (array_key_exists('about', $validated)) {
+            $user->title = $validated['title'];
+        }
 
         if (array_key_exists('institution', $validated)) {
             $user->institution = $validated['institution'];
@@ -105,6 +114,10 @@ class UserController extends Controller
 
         if (array_key_exists('facebook', $validated)) {
             $user->facebook = $validated['facebook'];
+        }
+
+        if (array_key_exists('instagram', $validated)) {
+            $user->instagram = $validated['instagram'];
         }
 
         if (array_key_exists('github', $validated)) {

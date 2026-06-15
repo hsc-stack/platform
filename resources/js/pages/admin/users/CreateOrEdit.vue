@@ -8,10 +8,9 @@ const props = defineProps({
 
 const roles = [
     { value: 'admin', label: 'Admin' },
-    { value: 'manager', label: 'Manager' },
     { value: 'editor', label: 'Editor' },
+    { value: 'manager', label: 'Manager' },
 ];
-
 
 const form = useForm({
     name: props.user?.name || '',
@@ -21,9 +20,11 @@ const form = useForm({
 
     image: props.user?.image || '',
     about: props.user?.about || '',
+    title: props.user?.title || '', 
     institution: props.user?.institution || '',
     facebook: props.user?.facebook || '',
     github: props.user?.github || '',
+    instagram: props.user?.instagram || '', // Instagram field initialized here
 });
 
 const goBack = () => {
@@ -193,8 +194,6 @@ const submitForm = () => {
                     </div>
                 </div>
 
-                <!-- NEW FIELDS START -->
-
                 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
                         <label
@@ -216,11 +215,44 @@ const submitForm = () => {
                                     : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500/20'
                             "
                         />
-                        <p v-if="form.errors.image" class="mt-1 text-sm text-rose-600">
+                        <p
+                            v-if="form.errors.image"
+                            class="mt-1 text-sm text-rose-600"
+                        >
                             {{ form.errors.image }}
                         </p>
                     </div>
 
+                    <div>
+                        <label
+                            for="title"
+                            class="mb-1.5 block text-sm font-semibold text-slate-700"
+                        >
+                            Title
+                        </label>
+                        <input
+                            v-model="form.title"
+                            type="text"
+                            id="title"
+                            placeholder="e.g. Lead Developer, Professor"
+                            :disabled="form.processing"
+                            class="w-full rounded-lg border px-4 py-2.5 transition outline-none disabled:bg-slate-50 disabled:text-slate-500"
+                            :class="
+                                form.errors.title
+                                    ? 'border-rose-500 focus:ring-rose-500/20'
+                                    : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500/20'
+                            "
+                        />
+                        <p
+                            v-if="form.errors.title"
+                            class="mt-1 text-sm text-rose-600"
+                        >
+                            {{ form.errors.title }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
                         <label
                             for="institution"
@@ -241,13 +273,14 @@ const submitForm = () => {
                                     : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500/20'
                             "
                         />
-                        <p v-if="form.errors.institution" class="mt-1 text-sm text-rose-600">
+                        <p
+                            v-if="form.errors.institution"
+                            class="mt-1 text-sm text-rose-600"
+                        >
                             {{ form.errors.institution }}
                         </p>
                     </div>
-                </div>
 
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
                         <label
                             for="facebook"
@@ -268,11 +301,16 @@ const submitForm = () => {
                                     : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500/20'
                             "
                         />
-                        <p v-if="form.errors.facebook" class="mt-1 text-sm text-rose-600">
+                        <p
+                            v-if="form.errors.facebook"
+                            class="mt-1 text-sm text-rose-600"
+                        >
                             {{ form.errors.facebook }}
                         </p>
                     </div>
+                </div>
 
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
                         <label
                             for="github"
@@ -293,8 +331,39 @@ const submitForm = () => {
                                     : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500/20'
                             "
                         />
-                        <p v-if="form.errors.github" class="mt-1 text-sm text-rose-600">
+                        <p
+                            v-if="form.errors.github"
+                            class="mt-1 text-sm text-rose-600"
+                        >
                             {{ form.errors.github }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <label
+                            for="instagram"
+                            class="mb-1.5 block text-sm font-semibold text-slate-700"
+                        >
+                            Instagram
+                        </label>
+                        <input
+                            v-model="form.instagram"
+                            type="text"
+                            id="instagram"
+                            placeholder="Instagram profile URL"
+                            :disabled="form.processing"
+                            class="w-full rounded-lg border px-4 py-2.5 transition outline-none disabled:bg-slate-50 disabled:text-slate-500"
+                            :class="
+                                form.errors.instagram
+                                    ? 'border-rose-500 focus:ring-rose-500/20'
+                                    : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500/20'
+                            "
+                        />
+                        <p
+                            v-if="form.errors.instagram"
+                            class="mt-1 text-sm text-rose-600"
+                        >
+                            {{ form.errors.instagram }}
                         </p>
                     </div>
                 </div>
@@ -319,12 +388,13 @@ const submitForm = () => {
                                 : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500/20'
                         "
                     ></textarea>
-                    <p v-if="form.errors.about" class="mt-1 text-sm text-rose-600">
+                    <p
+                        v-if="form.errors.about"
+                        class="mt-1 text-sm text-rose-600"
+                    >
                         {{ form.errors.about }}
                     </p>
                 </div>
-
-                <!-- NEW FIELDS END -->
 
                 <div
                     class="space-y-3.5 rounded-xl border border-gray-300 bg-slate-50/50 p-4.5"
@@ -344,15 +414,6 @@ const submitForm = () => {
                                 delete any resource or user.
                             </div>
                         </div>
-                        <div class="space-y-1 border-l-2 border-amber-500 pl-3">
-                            <div class="text-xs font-bold text-amber-700">
-                                Manager
-                            </div>
-                            <div class="text-xs leading-relaxed text-slate-600">
-                                Dashboard view. Authorized to explore and
-                                inspect the admin panel areas.
-                            </div>
-                        </div>
                         <div
                             class="space-y-1 border-l-2 border-purple-500 pl-3"
                         >
@@ -362,6 +423,15 @@ const submitForm = () => {
                             <div class="text-xs leading-relaxed text-slate-600">
                                 Content control. Can create new archives.
                                 Restricted from managing accounts.
+                            </div>
+                        </div>
+                        <div class="space-y-1 border-l-2 border-amber-500 pl-3">
+                            <div class="text-xs font-bold text-amber-700">
+                                Manager
+                            </div>
+                            <div class="text-xs leading-relaxed text-slate-600">
+                                Dashboard view. Authorized to explore and
+                                inspect the admin panel areas.
                             </div>
                         </div>
                     </div>

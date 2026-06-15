@@ -1,25 +1,9 @@
 <script setup lang="ts">
-import { Github, Facebook } from 'lucide-vue-next';
+import { Github, Facebook, Instagram } from 'lucide-vue-next';
 
 defineProps({
     member: Object,
 });
-
-const getRoleTitle = (role: string) => {
-    switch (role) {
-        case 'admin':
-            return 'Lead Maintainer & Developer';
-
-        case 'editor':
-            return 'Resource Curator';
-
-        case 'manager':
-            return 'Operations & Community Manager';
-
-        default:
-            return 'Team Member';
-    }
-};
 </script>
 
 <template>
@@ -54,7 +38,7 @@ const getRoleTitle = (role: string) => {
                 <p
                     class="text-xs font-bold tracking-wide text-indigo-600 uppercase"
                 >
-                    {{ getRoleTitle(member.roles?.[0]?.name) }}
+                    {{ member.title }}
                 </p>
                 <p class="text-xs font-semibold text-slate-400">
                     {{ member.institution }}
@@ -69,8 +53,9 @@ const getRoleTitle = (role: string) => {
         </div>
 
         <div
-            class="mt-8 flex items-center justify-center gap-6 border-t border-slate-100 pt-5"
+            class="mt-8 flex items-center justify-center gap-4 border-t border-slate-100 pt-5"
         >
+            <!-- GitHub Link -->
             <a
                 v-if="member.github"
                 :href="member.github"
@@ -81,10 +66,14 @@ const getRoleTitle = (role: string) => {
                 <Github class="h-4 w-4" />
                 GitHub
             </a>
+
+            <!-- Separator between GitHub and Facebook -->
             <span
-                v-if="member.github && member.facebook"
+                v-if="member.github && (member.facebook || member.instagram)"
                 class="h-3.5 w-px bg-slate-200"
             ></span>
+
+            <!-- Facebook Link -->
             <a
                 v-if="member.facebook"
                 :href="member.facebook"
@@ -93,7 +82,23 @@ const getRoleTitle = (role: string) => {
                 class="inline-flex items-center gap-2 text-xs font-bold text-slate-400 transition-colors hover:text-indigo-600"
             >
                 <Facebook class="h-4 w-4" />
-                Connect
+                Facebook
+            </a>
+
+            <span
+                v-if="member.facebook && member.instagram"
+                class="h-3.5 w-px bg-slate-200"
+            ></span>
+
+            <a
+                v-if="member.instagram"
+                :href="member.instagram"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-xs font-bold text-slate-400 transition-colors hover:text-pink-600"
+            >
+                <Instagram class="h-4 w-4" />
+                Instagram
             </a>
         </div>
     </div>
