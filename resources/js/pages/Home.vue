@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import HomeHeader from '@/components/HomeHeader.vue';
+import NoticeDialog from '@/components/NoticeDialog.vue';
 import RepositoryStas from '@/components/RepositoryStas.vue';
 import SubjectCard from '@/components/SubjectCard.vue';
 
@@ -9,6 +10,7 @@ const props = defineProps({
     subjectCount : Number,
     resourceCount : Number,
     siteTraffic : Number,
+    notice: Object,
 });
 
 const subjects = props.subjects;
@@ -22,6 +24,8 @@ const filteredSubjects = computed(() => {
 </script>
 
 <template>
+    <NoticeDialog v-if="notice" :notice="notice" />
+
     <HomeHeader v-model="searchQuery" />
 
     <main class="mx-auto max-w-7xl px-4 pb-20 sm:px-6">

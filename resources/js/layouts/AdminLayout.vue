@@ -3,6 +3,7 @@ import {
     LayoutDashboard,
     Users,
     BookOpen,
+    Bell,
 } from 'lucide-vue-next';
 import { ref } from 'vue';
 import DesktopSidebar from '@/components/admin/DesktopSidebar.vue';
@@ -15,6 +16,7 @@ const isMobileSidebarOpen = ref(false);
 const navigation = [
     { name: 'Dashboard', to: '/admin', icon: LayoutDashboard },
     { name: 'Manage Contents', to: '/admin/subjects', icon: BookOpen },
+    { name: 'Site Notice', to: '/admin/notice', icon: Bell },
     { name: 'Users', to: '/admin/users', icon: Users },
 ];
 

@@ -6,6 +6,7 @@
     use App\Http\Controllers\Admin\NodeController as AdminNodeController;
     use App\Http\Controllers\Admin\ResourceController as AdminResourceController;
     use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
+    use App\Http\Controllers\Admin\NoticeController as AdminNoticeController;
     use App\Http\Controllers\Admin\UserController as AdminUserController;
     use App\Http\Controllers\NodeController;
     use App\Http\Controllers\ResourceController;
@@ -34,6 +35,8 @@
             Route::get('/users/create', [AdminUserController::class, 'create']);
             Route::get('/users/edit/{user}', [AdminUserController::class, 'edit']);
 
+            Route::get('/notice', [AdminNoticeController::class, 'edit'])->name('notice.edit');
+
             Route::get('/subjects/{subject:slug}/nodes/{path?}', [AdminNodeController::class, 'show'])->name('nodes.index')->where('path', '.*');
         });
 
@@ -47,6 +50,8 @@
 
             Route::post('/resources', [AdminResourceController::class, 'store']);
             Route::post('/resources/{resource}/patch', [AdminResourceController::class, 'update']);
+            
+            Route::patch('/notice', [AdminNoticeController::class, 'update'])->name('notice.update');
         });
 
         Route::prefix('admin')->middleware(['auth', 'verified', 'role:admin'])->name('admin.')->group(function () {
