@@ -6,6 +6,7 @@ use App\Models\Node;
 use App\Models\Notice;
 use App\Models\Resource;
 use App\Models\Subject;
+use App\Models\User;
 use Inertia\Inertia;
 
 class SubjectController extends Controller
@@ -19,7 +20,7 @@ class SubjectController extends Controller
             'subjects' => $subjects,
             'subjectCount' => $subjects->count(),
             'resourceCount' => Resource::count(),
-            'siteTraffic' => 500,
+            'contributorCount' => User::count(),
             'notice' => $notice,
         ]);
     }

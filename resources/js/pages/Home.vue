@@ -7,9 +7,9 @@ import SubjectCard from '@/components/SubjectCard.vue';
 
 const props = defineProps({
     subjects: Array,
-    subjectCount : Number,
-    resourceCount : Number,
-    siteTraffic : Number,
+    subjectCount: Number,
+    resourceCount: Number,
+    siteTraffic: Number,
     notice: Object,
 });
 
@@ -56,6 +56,6 @@ const filteredSubjects = computed(() => {
     <RepositoryStas
         :total-subjects="subjectCount"
         :total-resources="resourceCount"
-        :total-traffic="siteTraffic"
+        :total-users="contributorCount"
     />
 </template>

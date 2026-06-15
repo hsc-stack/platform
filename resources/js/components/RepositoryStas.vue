@@ -10,19 +10,13 @@ const props = defineProps({
         type: Number,
         required: true,
     },
-    totalTraffic: {
+    totalUsers: {
         type: Number,
         required: true,
     },
 });
 
-const formatTraffic = computed(() => {
-    if (props.totalTraffic >= 1000) {
-        return (props.totalTraffic / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-    }
 
-    return props.totalTraffic;
-});
 </script>
 
 <template>
@@ -75,10 +69,10 @@ const formatTraffic = computed(() => {
             <div class="group flex items-center justify-between p-6 transition-colors duration-300 hover:bg-slate-50/50">
                 <div>
                     <p class="text-xs font-bold tracking-wider text-slate-400 uppercase transition-colors group-hover:text-slate-500">
-                        Monthly Traffic
+                        Total Contributors
                     </p>
                     <p class="mt-2 bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-3xl font-black tracking-tight text-transparent sm:text-4xl">
-                        {{ formatTraffic }}
+                        {{ totalUsers }}
                     </p>
                 </div>
                 <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-fuchsia-50 text-fuchsia-600 transition-all duration-300 group-hover:scale-110 group-hover:bg-fuchsia-600 group-hover:text-white">
