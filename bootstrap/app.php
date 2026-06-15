@@ -31,4 +31,28 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn(Request $request) => $request->is('api/*'),
         );
+        $exceptions->render(function (\Illuminate\Http\Request $request) {
+
+            $request->session()->flash('error', 'Access Denied: You do not have permission to access that section.');
+
+            $previousUrl = url()->previous();
+            $currentUrl = $request->fullUrl();
+
+            // If the previous URL is empty or matches the current URL, fallback to home page
+            if (!$previousUrl || $previousUrl === $currentUrl) {
+                return redirect()->to('/');
+            }
+
+            return redirect()->back();
+        });
+        
+        $exceptions->respond(function (\Symfony\Component\HttpFoundation\Response $response, \Throwable $exception, \Illuminate\Http\Request $request) {
+            if ($response->getStatusCode() === 404) {
+                return \Inertia\Inertia::render('Error')
+                    ->toResponse($request)
+                    ->setStatusCode(404);
+            }
+
+            return $response;
+        });
     })->create();

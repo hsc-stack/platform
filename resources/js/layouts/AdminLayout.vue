@@ -8,7 +8,7 @@ import { ref } from 'vue';
 import DesktopSidebar from '@/components/admin/DesktopSidebar.vue';
 import MobileSideBar from '@/components/admin/MobileSideBar.vue';
 import NavBar from '@/components/NavBar.vue';
-
+import ToastNotification from '@/components/ToastNotification.vue';
 
 const isMobileSidebarOpen = ref(false);
 
@@ -25,8 +25,6 @@ const openMobileSidebar = () => {
 const closeMobileSidebar = () => {
     isMobileSidebarOpen.value = false;
 };
-
-
 </script>
 
 <template>
@@ -63,5 +61,6 @@ const closeMobileSidebar = () => {
                 </main>
             </div>
         </div>
+        <ToastNotification />
     </div>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Footer from '@/components/Footer.vue';
 import NavBar from '@/components/NavBar.vue';
+import ToastNotification from '@/components/ToastNotification.vue';
 
 // const searchQuery = ref('');
 </script>
@@ -32,5 +33,6 @@ import NavBar from '@/components/NavBar.vue';
             
             <Footer />
         </div>
+        <ToastNotification />
     </div>
 </template>
