@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            return redirect()->route('admin.subjects.index');
+            return redirect()->route('admin.index');
         }
 
         return Inertia::render('auth/Login');
@@ -28,7 +28,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->route('admin.subjects.index');
+            return redirect()->route('admin.index');
         }
 
         return back()->withErrors([

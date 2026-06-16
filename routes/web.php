@@ -2,7 +2,6 @@
 
     use App\Http\Controllers\AboutUsController;
     use App\Http\Controllers\Admin\AuthController;
-    use App\Http\Controllers\Admin\DashboardController;
     use App\Http\Controllers\Admin\NodeController as AdminNodeController;
     use App\Http\Controllers\Admin\ResourceController as AdminResourceController;
     use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
@@ -20,7 +19,7 @@
 
         Route::prefix('admin')->middleware(['auth', 'verified', 'role:manager|admin|editor'])->name('admin.')->group(function () {
 
-            Route::get('/', [DashboardController::class, 'index']);
+            Route::inertia('/', 'admin/Dashboard')->name('index');
             Route::get('/subjects', [AdminSubjectController::class, 'index'])->name("subjects.index");
             Route::get('/subjects/create', [AdminSubjectController::class, 'create'])->name("subjects.create");
             Route::get('/subjects/edit/{subject}', [AdminSubjectController::class, 'edit'])->name("subjects.edit");
@@ -50,7 +49,7 @@
 
             Route::post('/resources', [AdminResourceController::class, 'store']);
             Route::post('/resources/{resource}/patch', [AdminResourceController::class, 'update']);
-            
+
             Route::patch('/notice', [AdminNoticeController::class, 'update'])->name('notice.update');
         });
 
