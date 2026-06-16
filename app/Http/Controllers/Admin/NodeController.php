@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Node\StoreNodeRequest;
+use App\Http\Requests\Node\UpdateNodeRequest;
 use App\Models\Node;
 use App\Models\Subject;
 use Illuminate\Http\Request;
@@ -79,14 +81,10 @@ class NodeController extends Controller
     }
 
 
-    public function store(Request $request, Subject $subject)
+    public function store(StoreNodeRequest $request, Subject $subject)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:200', 'min:2'],
-            'parent_id' => ['nullable', 'integer'],
-            'sort_order' => ['nullable', 'integer'],
-            'redirect' => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
+
 
         $parent = null;
 
@@ -96,12 +94,6 @@ class NodeController extends Controller
                 ->firstOrFail();
         }
 
-        $node = new Node();
-
-        $node->subject_id = $subject->id;
-        $node->parent_id = $parent?->id;
-        $node->name = $validated['name'];
-
         $slug = Str::slug($validated['name']);
 
         $exists = Node::where('parent_id', $parent?->id)
@@ -109,28 +101,29 @@ class NodeController extends Controller
             ->exists();
 
         if ($exists) {
-            return back()->withErrors([
-                'name' => 'Folder already exists in this location.',
-            ])->withInput();
+            return back()
+                ->withErrors([
+                    'name' => 'Folder already exists in this location.',
+                ])
+                ->withInput();
         }
 
-        $node->slug = $slug;
-        $node->sort_order = $validated['sort_order'] ?? 0;
-
-        $node->save();
+        Node::create([
+            'subject_id' => $subject->id,
+            'parent_id' => $parent?->id,
+            'name' => $validated['name'],
+            'slug' => $slug,
+            'sort_order' => $validated['sort_order'] ?? 0,
+        ]);
 
         $redirect = $validated['redirect'] ? $validated['redirect'] : explode('/create', url()->previous())[0];
 
         return redirect($redirect)->with('success', 'Node created successfully.');
     }
-    public function update(Request $request, Subject $subject, Node $node)
+
+    public function update(UpdateNodeRequest $request, Subject $subject, Node $node)
     {
-        $validated = $request->validate([
-            'name'       => ['sometimes', 'required', 'string', 'max:200', 'min:2'],
-            'parent_id'  => ['sometimes', 'nullable', 'integer'],
-            'sort_order' => ['sometimes', 'nullable', 'integer'],
-            'redirect'   => ['nullable', 'string'],
-        ]);
+        $validated = $request->validated();
 
         if (array_key_exists('parent_id', $validated)) {
             $parent = null;

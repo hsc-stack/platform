@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Node extends Model
 {
+
+    protected $fillable = [
+        'subject_id',
+        'parent_id',
+        'name',
+        'slug',
+        'sort_order',
+    ];
+
     public function children()
     {
         return $this->hasMany(Node::class, 'parent_id');
