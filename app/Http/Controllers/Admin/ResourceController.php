@@ -70,7 +70,7 @@ class ResourceController extends Controller
 
             $type    = $validated['resource_type'] ?? $resource->resource_type;
             $path    = $request->file('file')->store("resources/{$type}s", 'public');
-            $resource->file_url = Storage::url($path);
+            $validated['file_url'] = Storage::url($path);
         }
 
         $resource->update($validated);
