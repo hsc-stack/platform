@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { 
-    ArrowLeft, 
-    Megaphone, 
-    FolderHeart, 
-    Code2, 
+import {
+    ArrowLeft,
+    Megaphone,
+    FolderHeart,
+    Code2,
     MessageSquareShare,
-    Award
+    Award,
 } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 
@@ -14,86 +14,113 @@ const roles = [
     {
         id: 'promoter',
         title: 'Campus Promoter',
-        description: 'Expand our grassroots reach. Drive community awareness across student groups, share new archive updates, and represent us at your college.',
+        description:
+            'আমাদের এই উদ্যোগকে একদম রুট-লেভেলে পৌঁছে দিতে সাহায্য করুন। বিভিন্ন স্টুডেন্ট গ্রুপে কমিউনিটি অ্যাওয়ারনেস তৈরি করা, নতুন আর্কাইভ আপডেট শেয়ার করা এবং আপনার কলেজে আমাদের রিপ্রেজেন্ট করাই হবে আপনার কাজ।',
         icon: Megaphone,
         iconContainer: 'bg-emerald-50 text-emerald-600',
     },
     {
         id: 'curator',
         title: 'Resource Curator',
-        description: 'Gather and organize high-yield materials. Collect pristine board question sets, scan flawless practical records, and structure chapter data templates.',
+        description:
+            'হাই-কোয়ালিটি এবং কাজের পড়াশোনার ম্যাটেরিয়াল সংগ্রহ ও গুছিয়ে রাখা আপনার কাজ। একদম নিখুঁত বোর্ড কোশ্চেন সেট, প্র্যাক্টিক্যাল রেকর্ডস কালেক্ট করা এবং চ্যাপ্টার ওয়াইজ ডেটা টেমপ্লেট সাজাতে সাহায্য করবেন।',
         icon: FolderHeart,
         iconContainer: 'bg-amber-50 text-amber-700',
     },
     {
         id: 'developer',
         title: 'Core Developer',
-        description: 'Optimize our platform architecture, design hyper-clean frontend components, refine layout eye comfort, and ship repository features.',
+        description:
+            'আমাদের প্ল্যাটফর্ম আর্কিটেকচার আরও অপ্টিমাইজ করুন। একদম হাইপার-ক্লিন ফ্রন্টএন্ড কম্পোনেন্ট ডিজাইন করা, লেআউট আই-কমফর্ট রিফাইন করা এবং নতুন রেপোজিটরি ফিচার নিয়ে কাজ করবেন।',
         icon: Code2,
         iconContainer: 'bg-purple-50 text-purple-600',
-    }
+    },
 ];
 
 const selectedRole = ref('promoter');
 
 const currentRoleTitle = computed(() => {
-    return roles.find(r => r.id === selectedRole.value)?.title || 'Team Member';
+    return (
+        roles.find((r) => r.id === selectedRole.value)?.title || 'Team Member'
+    );
 });
 </script>
 
 <template>
     <!-- Header -->
     <header class="mx-auto max-w-3xl px-4 pt-12 pb-10 text-center sm:pt-16">
-        <Link 
-            href="/" 
-            class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-indigo-600 transition-colors mb-4 group"
+        <Link
+            href="/"
+            class="group mb-4 inline-flex items-center gap-2 text-xs font-bold text-slate-500 transition-colors hover:text-indigo-600"
         >
-            <ArrowLeft class="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />
+            <ArrowLeft
+                class="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5"
+            />
             Back to Home
         </Link>
-        <h1 class="mb-4 text-4xl leading-tight font-black tracking-tight text-slate-950 sm:text-5xl">
+        <h1
+            class="mb-4 text-4xl leading-tight font-black tracking-tight text-slate-950 sm:text-5xl"
+        >
             Build the ultimate archive, <br />
             <span class="text-indigo-600">together.</span>
         </h1>
-        <p class="mx-auto mb-4 max-w-md text-sm font-medium text-slate-500 sm:text-base">
-            Help us scale premium, distraction-free educational engineering to HSC students nationwide. Pick a role below to jump in.
+        <p
+            class="mx-auto mb-4 max-w-md text-sm font-medium text-slate-800 sm:text-base"
+        >
+            সারাদেশের HSC স্টুডেন্টদের কাছে প্রিমিয়াম ও ডিস্ট্রাকশন-ফ্রি লার্নিং
+            এক্সপেরিয়েন্স পৌঁছে দিতে আমাদের সাহায্য করুন। নিচের যেকোনো একটি রোল
+            সিলেক্ট করে আজই যুক্ত হোন।
         </p>
     </header>
 
     <main class="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-5">
-            
             <!-- Roles Selector Grid Left -->
             <div class="space-y-4 lg:col-span-3">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                <h2
+                    class="mb-2 text-xs font-bold tracking-wider text-slate-400 uppercase"
+                >
                     Open Roles
                 </h2>
-                
-                <div 
-                    v-for="role in roles" 
+
+                <div
+                    v-for="role in roles"
                     :key="role.id"
                     @click="selectedRole = role.id"
                     :class="[
-                        selectedRole === role.id 
-                            ? 'border-indigo-500 ring-4 ring-indigo-500/5 bg-indigo-50/10' 
+                        selectedRole === role.id
+                            ? 'border-indigo-500 bg-indigo-50/10 ring-4 ring-indigo-500/5'
                             : 'border-slate-200 bg-white hover:border-slate-300',
-                        'relative flex cursor-pointer touch-manipulation gap-4 rounded-xl border p-5 transition-all duration-200 active:scale-[0.99] sm:active:scale-100'
+                        'relative flex cursor-pointer touch-manipulation gap-4 rounded-xl border p-5 transition-all duration-200 active:scale-[0.99] sm:active:scale-100',
                     ]"
                 >
-                    <div :class="[role.iconContainer, 'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl']">
-                        <component :is="role.icon" class="h-5 w-5 stroke-[2.2]" />
+                    <div
+                        :class="[
+                            role.iconContainer,
+                            'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl',
+                        ]"
+                    >
+                        <component
+                            :is="role.icon"
+                            class="h-5 w-5 stroke-[2.2]"
+                        />
                     </div>
-                    
+
                     <div class="min-w-0 pr-4">
-                        <div class="flex items-center gap-2 flex-wrap">
+                        <div class="flex flex-wrap items-center gap-2">
                             <h3 class="text-base font-bold text-slate-900">
                                 {{ role.title }}
                             </h3>
-                            <span v-if="selectedRole === role.id" class="inline-flex items-center rounded-md px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-100">
+                            <span
+                                v-if="selectedRole === role.id"
+                                class="inline-flex items-center rounded-md border border-indigo-100 bg-indigo-50 px-1.5 py-0.5 text-[10px] font-bold tracking-wider text-indigo-700 uppercase"
+                            >
                                 Selected
                             </span>
                         </div>
-                        <p class="mt-1 text-sm font-medium leading-relaxed text-slate-500">
+                        <p
+                            class="mt-1 text-sm leading-relaxed font-medium text-slate-700"
+                        >
                             {{ role.description }}
                         </p>
                     </div>
@@ -102,39 +129,57 @@ const currentRoleTitle = computed(() => {
 
             <!-- Contextual CTA Right Panel -->
             <div class="lg:col-span-2">
-                <div class="sticky top-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 space-y-5">
+                <div
+                    class="sticky top-6 space-y-5 rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
+                >
                     <div>
-                        <h2 class="text-base font-bold text-slate-900 mb-1">
+                        <h2 class="mb-1 text-base font-bold text-slate-900">
                             How to Apply
                         </h2>
-                        <p class="text-xs font-medium text-slate-400">
-                            Let's skip the rigid forms. Drop a direct message with your background or interest to connect instantly.
+                        <p class="text-xs font-medium text-slate-900">
+                            আপনার ব্যাকগ্রাউন্ড বা আগ্রহের কথা জানিয়ে সরাসরি আমাদের মেসেজ দিন।
                         </p>
                     </div>
 
                     <!-- Recognition Benefit Box -->
-                    <div class="rounded-xl border border-indigo-100 bg-indigo-50/30 p-4 flex gap-3.5 items-start">
-                        <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600">
+                    <div
+                        class="flex items-start gap-3.5 rounded-xl border border-indigo-100 bg-indigo-50/30 p-4"
+                    >
+                        <div
+                            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600"
+                        >
                             <Award class="h-4 w-4 stroke-[2.2]" />
                         </div>
                         <div>
-                            <h4 class="text-xs font-bold text-slate-900">About Us Recognition</h4>
-                            <p class="mt-1 text-xs font-medium leading-relaxed text-slate-500">
-                                Approved team promoters, curators, and core devs will get an official, dedicated profile card listed permanently on our upcoming <strong class="text-slate-800">About Us</strong> page, acknowledging your structural impact.
+                            <h4 class="text-xs font-bold text-slate-900">
+                                About Us Recognition
+                            </h4>
+                            <p
+                                class="mt-1 text-xs leading-relaxed font-medium text-slate-800"
+                            >
+                                আমাদের অনুমোদিত প্রমোটর, কিউরেটর এবং ডেভেলপারদের 
+                                অবদানকে সম্মান জানাতে আমাদের অফিশিয়াল
+                                <strong class="text-slate-800">About Us</strong>
+                                পেজে একটি ডেডিকেটেড প্রোফাইল কার্ড স্থায়ীভাবে
+                                যুক্ত করা হবে।
                             </p>
                         </div>
                     </div>
 
                     <div class="border-t border-slate-100 pt-2">
-                        <p class="text-xs font-semibold text-slate-400 mb-3">
-                            Ready to pitch for <span class="text-indigo-600 font-bold">{{ currentRoleTitle }}</span>?
+                        <p class="mb-3 text-xs font-semibold text-slate-400">
+                            Ready to pitch for
+                            <span class="font-bold text-indigo-600">{{
+                                currentRoleTitle
+                            }}</span
+                            >?
                         </p>
-                        
-                        <a 
-                            href="https://facebook.com/trtajim" 
-                            target="_blank" 
+
+                        <a
+                            href="https://facebook.com/trtajim"
+                            target="_blank"
                             rel="noopener noreferrer"
-                            class="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-indigo-700 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-indigo-500/20"
+                            class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500/20 focus:outline-none active:scale-[0.98]"
                         >
                             <MessageSquareShare class="h-4 w-4" />
                             Message on Facebook
@@ -142,7 +187,6 @@ const currentRoleTitle = computed(() => {
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
 </template>

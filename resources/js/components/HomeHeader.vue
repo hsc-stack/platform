@@ -18,11 +18,9 @@ const searchQuery = defineModel();
             </h1>
 
             <p
-                class="mx-auto mb-10 max-w-xl text-base leading-relaxed font-medium text-slate-500/90 sm:text-lg"
+                class="mx-auto mb-10 max-w-xl text-base leading-relaxed font-medium text-slate-700/90 sm:text-lg"
             >
-                A clean, fast resource repository for HSC students in
-                Bangladesh. Browse notes, practicals, and past papers organized
-                by subject and chapter.
+                বাংলাদেশের HSC স্টুডেন্টদের জন্য একদম ক্লিন ও ফাস্ট রিসোর্স রিপোজিটরি। সাবজেক্ট এবং চ্যাপ্টার অনুযায়ী খুঁজে নিন প্রয়োজনীয় নোটস, প্র্যাক্টিক্যাল এবং পাস্ট পেপারস।
             </p>
 
             <div class="group relative mx-auto max-w-lg">

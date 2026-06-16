@@ -26,8 +26,8 @@ const props = defineProps({
             <h2 class="mt-1 text-2xl font-black tracking-tight text-indigo-600 sm:text-3xl">
                 Repository Statistics
             </h2>
-            <p class="mx-auto mt-2 max-w-sm text-sm text-slate-400">
-                Real-time overview of active subjects, study assets, and platform engagement.
+            <p class="mx-auto mt-2 max-w-sm text-sm text-slate-600">
+                অ্যাক্টিভ সাবজেক্ট, স্টাডি রিসোর্স এবং ইউজার অ্যাক্টিভিটির লাইভ আপডেট।
             </p>
         </div>
 
