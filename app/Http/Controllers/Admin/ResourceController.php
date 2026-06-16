@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Resource\StoreResourceRequest;
+use App\Http\Requests\Resource\UpdateResourceRequest;
 use App\Models\Node;
 use App\Models\Resource;
 use Illuminate\Http\Request;
@@ -34,31 +36,19 @@ class ResourceController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreResourceRequest $request)
     {
-        $validated = $request->validate([
-            'redirect'      => ['nullable', 'string'],
-            'node_id'       => ['required', 'integer', 'exists:nodes,id'],
-            'resource_type' => ['required', 'in:note,question,pdf,image,video'],
-            'title'         => ['required', 'string', 'max:100', 'min:2'],
-            'content'       => ['nullable', 'string'],
-            'file' => ['nullable', 'file', 'max:10000', 'mimes:pdf,jpg,jpeg,png,mp4'],
-        ]);
+        $validated = $request->validated();
 
         $fileUrl = null;
 
         if ($request->hasFile('file')) {
             $path    = $request->file('file')->store("resources/{$validated['resource_type']}s", 'public');
             $fileUrl = Storage::url($path);
+            $validated['file_url'] = $fileUrl;
         }
 
-        $resource = new Resource();
-        $resource->node_id       = $validated['node_id'];
-        $resource->resource_type = $validated['resource_type'];
-        $resource->title         = $validated['title'];
-        $resource->content = $validated['content'] ?? null;
-        $resource->file_url      = $fileUrl;
-        $resource->save();
+        Resource::create($validated);
 
         $redirect = $validated['redirect'] ?? explode('/resources', url()->previous())[0];
 
@@ -66,17 +56,10 @@ class ResourceController extends Controller
     }
 
 
-    public function update(Request $request, Resource $resource)
+    public function update(UpdateResourceRequest $request, Resource $resource)
     {
 
-        $validated = $request->validate([
-            'redirect'      => ['nullable', 'string'],
-            'node_id'       => ['sometimes', 'integer', 'exists:nodes,id'],
-            'resource_type' => ['sometimes', 'in:note,question,pdf,image,video'],
-            'title'         => ['sometimes', 'string', 'max:100', 'min:2'],
-            'content'       => ['sometimes', 'nullable', 'string'],
-            'file'          => ['sometimes', 'nullable', 'file', 'max:10000', 'mimes:pdf,jpg,jpeg,png,mp4'],
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('file')) {
             // Delete old file if exists
@@ -90,15 +73,8 @@ class ResourceController extends Controller
             $resource->file_url = Storage::url($path);
         }
 
-        if (isset($validated['node_id']))       $resource->node_id       = $validated['node_id'];
-        if (isset($validated['resource_type'])) $resource->resource_type = $validated['resource_type'];
-        if (isset($validated['title']))         $resource->title         = $validated['title'];
+        $resource->update($validated);
 
-        if (array_key_exists('content', $validated)) {
-            $resource->content = $validated['content'];
-        }
-
-        $resource->save();
         $redirect = $validated['redirect'] ?? "/admin/subjects";
 
         return redirect($redirect)->with('success', 'Resource updated successfully.');

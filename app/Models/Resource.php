@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Resource extends Model
 {
+    protected $fillable = [
+        'node_id',
+        'resource_type',
+        'title',
+        'content',
+        'file_url',
+    ];
     //
     public function node()
     {
