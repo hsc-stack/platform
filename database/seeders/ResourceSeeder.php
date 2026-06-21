@@ -16,6 +16,7 @@ class ResourceSeeder extends Seeder
             DB::table('resources')->insert([
                 [
                     'node_id' => $node->id,
+                    'user_id' => 1,
                     'resource_type' => 'note',
                     'title' => $node->name . ' - অধ্যায়ভিত্তিক নোট',
                     'content' => $node->name . ' অধ্যায়ের গুরুত্বপূর্ণ তত্ত্ব, সূত্র ও আলোচনা।',
@@ -25,6 +26,7 @@ class ResourceSeeder extends Seeder
                 ],
                 [
                     'node_id' => $node->id,
+                    'user_id' => 1,
                     'resource_type' => 'question',
                     'title' => $node->name . ' - গুরুত্বপূর্ণ প্রশ্ন',
                     'content' => $node->name . ' অধ্যায়ের বোর্ড ও ভর্তি পরীক্ষার গুরুত্বপূর্ণ প্রশ্ন।',
@@ -34,6 +36,7 @@ class ResourceSeeder extends Seeder
                 ],
                 [
                     'node_id' => $node->id,
+                    'user_id' => 1,
                     'resource_type' => 'pdf',
                     'title' => $node->name . ' - PDF হ্যান্ডনোট',
                     'content' => null,
@@ -43,6 +46,7 @@ class ResourceSeeder extends Seeder
                 ],
                 [
                     'node_id' => $node->id,
+                    'user_id' => 1,
                     'resource_type' => 'image',
                     'title' => $node->name . ' - চিত্র',
                     'content' => null,
@@ -52,6 +56,7 @@ class ResourceSeeder extends Seeder
                 ],
                 [
                     'node_id' => $node->id,
+                    'user_id' => 1,
                     'resource_type' => 'video',
                     'title' => $node->name . ' - ভিডিও লেকচার',
                     'content' => null,

@@ -8,6 +8,7 @@ use App\Http\Requests\Resource\UpdateResourceRequest;
 use App\Models\Node;
 use App\Models\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -39,7 +40,7 @@ class ResourceController extends Controller
     public function store(StoreResourceRequest $request)
     {
         $validated = $request->validated();
-
+        $validated['user_id'] = Auth::id();
         $fileUrl = null;
 
         if ($request->hasFile('file')) {

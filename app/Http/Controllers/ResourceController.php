@@ -11,6 +11,7 @@ class ResourceController extends Controller
     //
 
     function show (Resource $resource){
+        $resource->load('user');
         return Inertia::render('Resource', [
             'resource'=>$resource
         ]);

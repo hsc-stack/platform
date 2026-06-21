@@ -21,8 +21,8 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             SubjectSeeder::class,
             NodeSeeder::class,
-            ResourceSeeder::class,
             AdminSeeder::class,
+            ResourceSeeder::class,
         ]);
     }
 }

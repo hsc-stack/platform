@@ -15,10 +15,15 @@ class Resource extends Model
         'title',
         'content',
         'file_url',
+        'user_id',
     ];
     //
     public function node()
     {
         return $this->belongsTo(Node::class);
+    }
+     public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
