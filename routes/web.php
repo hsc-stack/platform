@@ -10,6 +10,7 @@
     use App\Http\Controllers\NodeController;
     use App\Http\Controllers\ResourceController;
     use App\Http\Controllers\SubjectController;
+    use Illuminate\Support\Facades\Cache;
     use Illuminate\Support\Facades\Route;
 
 
@@ -51,6 +52,10 @@
             Route::post('/resources/{resource}/patch', [AdminResourceController::class, 'update']);
 
             Route::patch('/notice', [AdminNoticeController::class, 'update'])->name('notice.update');
+            Route::post('/clear-cache', function () {
+                Cache::forget('home_page_data');
+                return back()->with('success', 'Cache cleared.');
+            });
         });
 
         Route::prefix('admin')->middleware(['auth', 'verified', 'role:admin'])->name('admin.')->group(function () {

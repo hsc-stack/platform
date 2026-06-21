@@ -7,22 +7,26 @@ use App\Models\Notice;
 use App\Models\Resource;
 use App\Models\Subject;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class SubjectController extends Controller
 {
     public function index()
     {
-        $subjects = Subject::orderBy('sort_order', 'asc')->withCount('nodes')->get();
-        $notice = Notice::activeForDisplay();
+        $homeData = Cache::rememberForever("home_page_data", function () {
+            $subjects = Subject::orderBy('sort_order', 'asc')->withCount('nodes')->get();
 
-        return Inertia::render('Home', [
-            'subjects' => $subjects,
-            'subjectCount' => $subjects->count(),
-            'resourceCount' => Resource::count(),
-            'contributorCount' => User::count(),
-            'notice' => $notice,
-        ]);
+            return  [
+                'subjects' => $subjects->toArray(),
+                'subjectCount' => $subjects->count(),
+                'resourceCount' => Resource::count(),
+                'contributorCount' => User::count(),
+                'notice' => Notice::activeForDisplay(),
+            ];
+        });
+
+        return Inertia::render('Home', $homeData);
     }
 
     public function show(Subject $subject)

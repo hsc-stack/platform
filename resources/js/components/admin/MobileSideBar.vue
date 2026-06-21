@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { X, LogOut } from 'lucide-vue-next';
+import { X, LogOut, Database } from 'lucide-vue-next';
 
 defineProps({
     navigation: Array,
@@ -56,7 +56,18 @@ defineEmits(['close', 'logout']);
 
             <div class="space-y-3">
                 <Link
+                    method="post"
+                    href="/admin/clear-cache"
+                    as="button"
+                    class="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-rose-600 hover:bg-rose-50/60"
+                >
+                    <Database class="h-4 w-4" />
+                    Clear Cache
+                </Link>
+                <Link
+                    method="post"
                     href="/logout"
+                    as="button"
                     class="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-rose-600 hover:bg-rose-50/60"
                 >
                     <LogOut class="h-4 w-4" />

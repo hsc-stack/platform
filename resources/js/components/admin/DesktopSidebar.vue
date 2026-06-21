@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { Link, router } from '@inertiajs/vue3';
-import { LogOut } from 'lucide-vue-next';
+import { Database, LogOut } from 'lucide-vue-next';
 defineProps({
     navigation: Array,
 });
 const handleLogout = () => {
     if (confirm('Are you sure you want to log out?')) {
         router.post('/logout');
+    }
+};
+
+const handleClearCache = () => {
+    if (confirm('Are you sure you want to clear all cache?')) {
+        router.post('/admin/clear-cache');
     }
 };
 </script>
@@ -50,6 +56,23 @@ const handleLogout = () => {
     </nav>
 
     <div class="space-y-3">
+        <button
+            @click="handleClearCache"
+            class="group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-rose-600 transition-all duration-300 hover:bg-rose-50/60 hover:text-rose-700"
+        >
+            <span
+                class="absolute top-1/4 bottom-1/4 left-0 w-[3px] origin-center scale-y-0 rounded-full bg-rose-600 transition-transform duration-200 group-hover:scale-y-100"
+            ></span>
+            <Database
+                class="h-4 w-4 text-rose-400 transition-all duration-300 ease-out group-hover:scale-110 group-hover:-rotate-[4deg] group-hover:text-rose-500"
+                :stroke-width="2"
+            />
+            <span
+                class="transform transition-transform duration-300 ease-out group-hover:translate-x-0.5"
+            >
+                Clear cache
+            </span>
+        </button>
         <button
             @click="handleLogout"
             class="group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-rose-600 transition-all duration-300 hover:bg-rose-50/60 hover:text-rose-700"
