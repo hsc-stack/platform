@@ -22,7 +22,7 @@ class SubjectController extends Controller
                 'subjectCount' => $subjects->count(),
                 'resourceCount' => Resource::count(),
                 'contributorCount' => User::count(),
-                'notice' => Notice::activeForDisplay(),
+                'notice' => Notice::activeForDisplay()?->toArray(),
             ];
         });
 
