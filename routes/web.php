@@ -2,6 +2,7 @@
 
     use App\Http\Controllers\AboutUsController;
     use App\Http\Controllers\Admin\AuthController;
+    use App\Http\Controllers\Admin\DashboardController;
     use App\Http\Controllers\Admin\NodeController as AdminNodeController;
     use App\Http\Controllers\Admin\ResourceController as AdminResourceController;
     use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
@@ -20,7 +21,8 @@
 
         Route::prefix('admin')->middleware(['auth', 'verified', 'role:manager|admin|editor'])->name('admin.')->group(function () {
 
-            Route::inertia('/', 'admin/Dashboard')->name('index');
+            Route::get('/', [DashboardController::class, 'index'])->name('index');
+
             Route::get('/subjects', [AdminSubjectController::class, 'index'])->name("subjects.index");
             Route::get('/subjects/create', [AdminSubjectController::class, 'create'])->name("subjects.create");
             Route::get('/subjects/edit/{subject}', [AdminSubjectController::class, 'edit'])->name("subjects.edit");
@@ -54,6 +56,7 @@
             Route::patch('/notice', [AdminNoticeController::class, 'update'])->name('notice.update');
             Route::post('/clear-cache', function () {
                 Cache::forget('home_page_data');
+                Cache::forget('admin_dashboard_stats');
                 return back()->with('success', 'Cache cleared.');
             });
         });
