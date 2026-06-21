@@ -23,7 +23,7 @@ class DashboardController extends Controller
                         ->groupBy('source')
                         ->orderByDesc('visits')
                         ->limit(10)
-                        ->get(),
+                        ->get()->toArray(),
                 ],
             ];
         });
