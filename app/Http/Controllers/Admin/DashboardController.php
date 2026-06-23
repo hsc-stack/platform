@@ -14,9 +14,9 @@ class DashboardController extends Controller
         $stats = Cache::remember('admin_dashboard_stats', now()->addHour(), function () {
             return [
                 'stats' => [
-                    'total_visits' => Traffic::count(),
+                    'total_visits' => Traffic::sum('visits'),
 
-                    'total_users' => Traffic::distinct('ip_address')->count('ip_address'),
+                    'total_users' => Traffic::count(),
 
                     'top_sources' => Traffic::select('source')
                         ->selectRaw('count(*) as visits')

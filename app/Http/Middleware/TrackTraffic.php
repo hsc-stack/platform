@@ -24,12 +24,16 @@ class TrackTraffic
             default => 'direct',
         };
 
-        Traffic::create([
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'source' => $source,
-            'path' => $request->path(),
-        ]);
+        $traffic = Traffic::firstOrCreate(
+            ['ip_address' => $request->ip()],
+            [
+                'user_agent' => $request->userAgent(),
+                'source' => $source,
+            ]
+        );
+
+        $traffic->increment('visits');
+
 
         return $next($request);
     }
