@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Node;
-use App\Models\Resource;
 use App\Models\Subject;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class NodeController extends Controller
@@ -33,16 +32,23 @@ class NodeController extends Controller
             $parent = $node;
         }
 
-        $nodes = Node::where('parent_id', $node->id)
-            ->orderBy('sort_order')
-            ->withCount(['children', 'resources'])
-            ->get(['id', 'name', 'slug']);
+        $nodes = Cache::rememberForever("node_children_{$node->id}", function () use ($node) {
+            return Node::where('parent_id', $node->id)
+                ->orderBy('sort_order')
+                ->withCount(['children', 'resources'])
+                ->get(['id', 'name', 'slug']);
+        });
 
-        $resources = $node->resources()->get();
+        $resources = Cache::rememberForever("node_resources_{$node->id}", function () use ($node) {
+            return $node->resources()->get();
+        });
+
         return Inertia::render('Node', [
             'subject' => $subject,
             'nodes' => $nodes,
-            'breadcrumb' => $this->buildBreadcrumb($node),
+            'breadcrumb' => Cache::rememberForever("node_breadcrumb_{$node->id}", function () use ($node) {
+                return $this->buildBreadcrumb($node);
+            }),
             'resources' => $resources,
         ]);
     }

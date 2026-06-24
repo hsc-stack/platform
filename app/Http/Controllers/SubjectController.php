@@ -31,15 +31,17 @@ class SubjectController extends Controller
 
     public function show(Subject $subject)
     {
-        $nodes = Node::where('subject_id', $subject->id)
-            ->whereNull('parent_id')
-            ->orderBy('sort_order')
-            ->withCount(['children', 'resources'])
-            ->get(['id', 'name', 'slug']);
+        $nodes = Cache::rememberForever("subject_page_{$subject->id}", function () use ($subject) {
+            return Node::where('subject_id', $subject->id)
+                ->whereNull('parent_id')
+                ->orderBy('sort_order')
+                ->withCount(['children', 'resources'])
+                ->get(['id', 'name', 'slug'])->toArray();
+        });
 
         return Inertia::render('Node', [
-            'subject'   => $subject,
-            'nodes'     => $nodes,
+            'subject' => $subject,
+            'nodes' => $nodes,
             'breadcrumb' => [],
             'resources' => [],
         ]);

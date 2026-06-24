@@ -55,8 +55,7 @@
 
             Route::patch('/notice', [AdminNoticeController::class, 'update'])->name('notice.update');
             Route::post('/clear-cache', function () {
-                Cache::forget('home_page_data');
-                Cache::forget('admin_dashboard_stats');
+                Cache::flush();
                 return back()->with('success', 'Cache cleared.');
             });
         });
