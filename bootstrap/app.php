@@ -7,10 +7,12 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -40,6 +42,10 @@ return Application::configure(basePath: dirname(__DIR__))
             return redirect()
                 ->back()
                 ->with('error', 'You do not have permission to perform this action.');
+        });
+
+        $exceptions->render(function (NotFoundHttpException $e) {
+            return Inertia::render('Error');
         });
 
         $exceptions->shouldRenderJsonWhen(
