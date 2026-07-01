@@ -38,6 +38,7 @@ const goBack = () => {
                 v-for="member in users"
                 :key="member.name"
                 :member="member"
+                :id="member.id"
             />
 
             <div

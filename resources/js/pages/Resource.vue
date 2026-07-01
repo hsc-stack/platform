@@ -162,7 +162,7 @@ watch(isFullscreen, (val) => {
 
                         <Link
                             v-if="resource.user?.name"
-                            href="/about-us"
+                            :href="`/about-us#${resource.user.id}`"
                             class="group mt-2 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600 transition-all hover:bg-indigo-50 hover:text-indigo-700"
                         >
                             <User
