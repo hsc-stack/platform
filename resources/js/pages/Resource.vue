@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import {
     FileText,
@@ -12,8 +11,8 @@ import {
     RotateCcw,
     User,
 } from 'lucide-vue-next';
-
-const props = defineProps({
+import { ref, watch } from 'vue';
+defineProps({
     resource: {
         type: Object,
         required: true,
@@ -40,6 +39,7 @@ const handleBack = () => {
 
 const toggleFullscreen = () => {
     isFullscreen.value = !isFullscreen.value;
+
     if (!isFullscreen.value) {
         resetZoom();
     }
@@ -63,6 +63,7 @@ const handlePointerDown = (e: MouseEvent | TouchEvent) => {
         isDragging.value = false;
         initialScale = scale.value;
         startTouchDistance = getTouchDistance(e);
+
         return;
     }
 
@@ -80,10 +81,14 @@ const handlePointerMove = (e: MouseEvent | TouchEvent) => {
         const currentDistance = getTouchDistance(e);
         const newScale = initialScale * (currentDistance / startTouchDistance);
         scale.value = Math.min(Math.max(newScale, 1), 5);
+
         return;
     }
 
-    if (!isDragging.value || scale.value === 1) return;
+    if (!isDragging.value || scale.value === 1) {
+return;
+}
+
     e.preventDefault();
 
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
@@ -95,7 +100,10 @@ const handlePointerMove = (e: MouseEvent | TouchEvent) => {
 
 const handlePointerUp = () => {
     isDragging.value = false;
-    if (scale.value < 1) resetZoom();
+
+    if (scale.value < 1) {
+resetZoom();
+}
 };
 
 const handleWheel = (e: WheelEvent) => {
@@ -105,7 +113,9 @@ const handleWheel = (e: WheelEvent) => {
     const newScale = scale.value + delta * zoomIntensity;
     scale.value = Math.min(Math.max(newScale, 1), 5);
 
-    if (scale.value === 1) resetZoom();
+    if (scale.value === 1) {
+resetZoom();
+}
 };
 
 watch(isFullscreen, (val) => {

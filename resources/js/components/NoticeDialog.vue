@@ -15,7 +15,9 @@ const getStorageKey = () => {
 };
 
 const checkVisibility = () => {
-    if (!props.notice) return false;
+    if (!props.notice) {
+return false;
+}
     
     
     return sessionStorage.getItem(getStorageKey()) !== 'true';
@@ -35,6 +37,7 @@ const close = () => {
     if (props.notice) {
         sessionStorage.setItem(getStorageKey(), 'true');
     }
+
     isVisible.value = false;
 };
 </script>
