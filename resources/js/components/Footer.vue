@@ -16,9 +16,9 @@ import AppLogo from './AppLogo.vue';
                         Empowering the next generation of students with high
                         quality, direct, and accessible academic resources.
                     </p>
-                    
+
                     <a
-                        href="https://github.com/trtajim/hsc-stack"
+                        href="https://github.com/hsc-stack"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="mt-4 text-slate-400 transition-colors duration-150 hover:text-slate-900"
