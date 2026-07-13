@@ -22,7 +22,7 @@ class AdminSeeder extends Seeder
         $admin->assignRole('admin');
 
         $manager = User::updateOrCreate(
-            ['email' => "check@tajimz.xyz"],
+            ['email' => "check@example.com"],
             [
                 'name'              => "manager",
                 'password'          => Hash::make('check123'),

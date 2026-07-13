@@ -88,7 +88,7 @@ const submit = () => {
                         <p>
                             Email:
                             <span class="font-bold text-slate-900"
-                                >check@tajimz.xyz</span
+                                >check@example.com</span
                             >
                         </p>
                         <p>
