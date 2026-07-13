@@ -85,7 +85,7 @@ import AppLogo from './AppLogo.vue';
                                     target="_blank"
                                     class="text-sm font-medium text-slate-600 transition-colors duration-150 hover:text-indigo-600"
                                 >
-                                    About us
+                                    Our Contributors
                                 </a>
                             </li>
                         </ul>
