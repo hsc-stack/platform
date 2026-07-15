@@ -137,7 +137,8 @@ const currentRoleTitle = computed(() => {
                             How to Apply
                         </h2>
                         <p class="text-xs font-medium text-slate-900">
-                            আপনার ব্যাকগ্রাউন্ড বা আগ্রহের কথা জানিয়ে সরাসরি আমাদের মেসেজ দিন।
+                            আপনার ব্যাকগ্রাউন্ড বা আগ্রহের কথা জানিয়ে সরাসরি
+                            আমাদের মেসেজ দিন।
                         </p>
                     </div>
 
@@ -157,7 +158,7 @@ const currentRoleTitle = computed(() => {
                             <p
                                 class="mt-1 text-xs leading-relaxed font-medium text-slate-800"
                             >
-                                আমাদের অনুমোদিত প্রমোটর, কিউরেটর এবং ডেভেলপারদের 
+                                আমাদের অনুমোদিত প্রমোটর, কিউরেটর এবং ডেভেলপারদের
                                 অবদানকে সম্মান জানাতে আমাদের অফিশিয়াল
                                 <strong class="text-slate-800">About Us</strong>
                                 পেজে একটি ডেডিকেটেড প্রোফাইল কার্ড স্থায়ীভাবে
@@ -176,13 +177,13 @@ const currentRoleTitle = computed(() => {
                         </p>
 
                         <a
-                            href="https://facebook.com/trtajim"
+                            href="https://wa.me/8801909131512"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-500/20 focus:outline-none active:scale-[0.98]"
+                            class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-500/20 focus:outline-none active:scale-[0.98]"
                         >
                             <MessageSquareShare class="h-4 w-4" />
-                            Message on Facebook
+                            Message on WhatsApp
                         </a>
                     </div>
                 </div>
