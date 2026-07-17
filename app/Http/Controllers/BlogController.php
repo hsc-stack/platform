@@ -26,10 +26,15 @@ class BlogController extends Controller
             ->where('is_published', true);
 
         if ($request->filled('q')) {
-            $blogs->where(function ($query) use ($request) {
-                $query->where('title', 'like', '%' . $request->q . '%')
-                    ->orWhere('excerpt', 'like', '%' . $request->q . '%')
-                    ->orWhere('seo_tags', 'like', '%' . $request->q . '%');
+            $search = $request->q;
+
+            $blogs->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('excerpt', 'like', "%{$search}%")
+                    ->orWhere('seo_tags', 'like', "%{$search}%")
+                    ->orWhereHas('user', function ($userQuery) use ($search) {
+                        $userQuery->where('name', 'like', "%{$search}%");
+                    });
             });
         }
 
@@ -51,7 +56,7 @@ class BlogController extends Controller
 
         $blog->increment('views');
 
-        return Inertia::render('Blog/Show',[
+        return Inertia::render('Blog/Show', [
             'blog' => $blog,
         ]);
     }
