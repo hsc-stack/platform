@@ -2,12 +2,14 @@
 
     use App\Http\Controllers\AboutUsController;
     use App\Http\Controllers\Admin\AuthController;
+    use App\Http\Controllers\Admin\BlogController as AdminBlogController;
     use App\Http\Controllers\Admin\DashboardController;
     use App\Http\Controllers\Admin\NodeController as AdminNodeController;
     use App\Http\Controllers\Admin\ResourceController as AdminResourceController;
     use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
     use App\Http\Controllers\Admin\NoticeController as AdminNoticeController;
     use App\Http\Controllers\Admin\UserController as AdminUserController;
+    use App\Http\Controllers\BlogController;
     use App\Http\Controllers\NodeController;
     use App\Http\Controllers\ResourceController;
     use App\Http\Controllers\SubjectController;
@@ -26,6 +28,10 @@
             Route::get('/subjects', [AdminSubjectController::class, 'index'])->name("subjects.index");
             Route::get('/subjects/create', [AdminSubjectController::class, 'create'])->name("subjects.create");
             Route::get('/subjects/edit/{subject}', [AdminSubjectController::class, 'edit'])->name("subjects.edit");
+
+            Route::get('/blogs', [AdminBlogController::class, 'index'])->name("blogs.index");
+            Route::get('/blogs/create', [AdminBlogController::class, 'create'])->name("blogs.create");
+            Route::get('/blogs/edit/{blog}', [AdminBlogController::class, 'edit'])->name("blogs.edit");
 
             Route::get('/subjects/{subject:slug}/nodes/create', [AdminNodeController::class, 'create'])->name('nodes.create');
             Route::get('/nodes/edit/{node}', [AdminNodeController::class, 'edit'])->name('nodes.edit');
@@ -47,6 +53,9 @@
             Route::patch('/subjects/edit/{subject}', [AdminSubjectController::class, 'update'])->name("subjects.update");
             Route::post('/subjects', [AdminSubjectController::class, 'store'])->name("subjects.store");
 
+            Route::post('/blogs/edit/{blog}/patch', [AdminBlogController::class, 'update'])->name("blogs.update");
+            Route::post('/blogs', [AdminBlogController::class, 'store'])->name("blogs.store");
+
             Route::post('/subjects/{subject}/nodes', [AdminNodeController::class, 'store'])->name('nodes.store');
             Route::patch('/subjects/{subject}/nodes/{node}', [AdminNodeController::class, 'update'])->name('nodes.patch');
 
@@ -63,6 +72,7 @@
         Route::prefix('admin')->middleware(['auth', 'verified', 'role:admin'])->name('admin.')->group(function () {
             Route::delete('/resources/{resource}', [AdminResourceController::class, 'destroy']);
             Route::delete('/subjects/{subject}', [AdminSubjectController::class, 'destroy']);
+            Route::delete('/blogs/{blog}', [AdminBlogController::class, 'destroy']);
             Route::delete('/nodes/{node}', [AdminNodeController::class, 'destroy']);
             Route::delete('/users/{user}', [AdminUserController::class, 'destroy']);
 
@@ -84,6 +94,9 @@
 
         Route::get('/login', [AuthController::class, 'index'])->name('login');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+        Route::get('/blogs', [BlogController::class, 'index']);
+        Route::get('/blogs/{blog}', [BlogController::class, 'show']);
 
         Route::get('/', [SubjectController::class, 'index'])->name('index');
         Route::get('/resources/{id}', [ResourceController::class, 'show']);

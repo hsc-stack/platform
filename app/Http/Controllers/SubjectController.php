@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\Node;
 use App\Models\Notice;
 use App\Models\Resource;
@@ -19,6 +20,12 @@ class SubjectController extends Controller
 
             return  [
                 'subjects' => $subjects->toArray(),
+                'featured_blogs' => Blog::where('is_featured', true)
+                    ->with('user:id,name')
+                    ->latest()
+                    ->limit(3)
+                    ->get()
+                    ->toArray(),
                 'subjectCount' => $subjects->count(),
                 'resourceCount' => Resource::count(),
                 'contributorCount' => User::count(),
