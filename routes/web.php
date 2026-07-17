@@ -8,6 +8,7 @@
     use App\Http\Controllers\Admin\SubjectController as AdminSubjectController;
     use App\Http\Controllers\Admin\NoticeController as AdminNoticeController;
     use App\Http\Controllers\Admin\UserController as AdminUserController;
+    use App\Http\Controllers\BlogController;
     use App\Http\Controllers\NodeController;
     use App\Http\Controllers\ResourceController;
     use App\Http\Controllers\SubjectController;
@@ -84,6 +85,9 @@
 
         Route::get('/login', [AuthController::class, 'index'])->name('login');
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+        Route::get('/blogs', [BlogController::class, 'index']);
+        Route::get('/blogs/{blog}', [BlogController::class, 'show']);
 
         Route::get('/', [SubjectController::class, 'index'])->name('index');
         Route::get('/resources/{id}', [ResourceController::class, 'show']);
