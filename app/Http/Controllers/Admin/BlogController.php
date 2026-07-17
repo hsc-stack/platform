@@ -7,6 +7,7 @@ use App\Http\Requests\Blog\StoreBlogRequest;
 use App\Http\Requests\Blog\UpdateBlogRequest;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -50,6 +51,8 @@ class BlogController extends Controller
 
         Blog::create($data);
 
+        if ($request->is_featured) Cache::forget('home_page_data');
+
         return redirect()->route('admin.blogs.index');
     }
 
@@ -61,7 +64,8 @@ class BlogController extends Controller
         if ($request->hasFile('featured_image')) {
 
             // Delete old image
-            if ($blog->featured_image) {
+            if ($blog->featured_image && str_starts_with($blog->featured_image, '/storage/')) {
+
                 $oldPath = str_replace('/storage/', '', $blog->featured_image);
                 Storage::disk('public')->delete($oldPath);
             }
@@ -75,7 +79,9 @@ class BlogController extends Controller
             // Keep existing image
             unset($data['featured_image']);
         }
-
+        if ($blog->is_featured || $request->is_featured) {
+            Cache::forget('home_page_data');
+        }
         $blog->update($data);
 
 
@@ -86,12 +92,17 @@ class BlogController extends Controller
 
     public function destroy(Blog $blog)
     {
-        if ($blog->featured_image) {
+        if ($blog->featured_image && str_starts_with($blog->featured_image, '/storage/')) {
+
             $path = str_replace('/storage/', '', $blog->featured_image);
             Storage::disk('public')->delete($path);
         }
 
+        if ($blog->is_featured) {
+            Cache::forget('home_page_data');
+        }
         $blog->delete();
+
 
         return redirect()
             ->back()
