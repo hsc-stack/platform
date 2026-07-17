@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { Link, Head } from '@inertiajs/vue3';
-import { Calendar, User, Eye, ArrowLeft, Tag } from 'lucide-vue-next';
+import { Calendar, User, Eye, ArrowLeft } from 'lucide-vue-next';
 
 const props = defineProps({
     blog: Object,
@@ -112,6 +112,21 @@ const copyLink = async () => {
                 v-html="blog.content"
             ></div>
         </article>
+
+        <!-- "Write for us" CTA Banner -->
+        <section class="mt-12 rounded-2xl border border-indigo-100 bg-indigo-50/50 p-6 sm:flex sm:items-center sm:justify-between">
+            <div class="mb-4 sm:mb-0">
+                <h3 class="text-lg font-bold text-slate-900">Want to write a blog on this site?</h3>
+                <p class="mt-1 text-sm text-slate-600">Share your thoughts, stories, and expertise with our community.</p>
+            </div>
+            <Link
+                href="/join"
+                class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+                Join us
+            </Link>
+        </section>
+
         <footer class="mt-12 border-t border-slate-200 pt-8">
             <div
                 class="flex flex-col gap-6 rounded-2xl bg-slate-50 p-6 sm:flex-row sm:items-center sm:justify-between"
