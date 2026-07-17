@@ -24,11 +24,18 @@ defineProps({
                     v-if="isAdmin"
                     class="rounded bg-slate-100 px-2 py-0.5 text-xs font-semibold tracking-wider text-slate-400 uppercase"
                 >
-                    Login
+                    Admin
                 </span>
             </div>
 
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-6">
+                <Link
+                    href="/blogs"
+                    class="text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
+                >
+                    Blogs
+                </Link>
+
                 <Link
                     :href="isAdmin ? '/' : '/admin'"
                     class="text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
