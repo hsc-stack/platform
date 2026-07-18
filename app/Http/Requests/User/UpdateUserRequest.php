@@ -35,7 +35,8 @@ class UpdateUserRequest extends FormRequest
             'email'       => ['sometimes', 'email', 'unique:users,email,' . $user->id],
             'password'    => ['sometimes', 'nullable', 'string', 'min:6'],
             'role'        => ['sometimes', 'string'],
-
+            'permissions'   => ['sometimes', 'array'],
+            'permissions.*' => ['string', 'exists:permissions,name'],
             'image'       => ['sometimes', 'nullable', 'string', 'max:255'],
             'about'       => ['sometimes', 'nullable', 'string'],
             'title'       => ['sometimes', 'nullable', 'string'],
