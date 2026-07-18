@@ -4,6 +4,8 @@ import {
     ArrowLeft,
     Megaphone,
     FolderHeart,
+    MessageSquare,
+    PenTool,
     Code2,
     MessageSquareShare,
     Award,
@@ -15,7 +17,7 @@ const roles = [
         id: 'promoter',
         title: 'Campus Promoter',
         description:
-            'আমাদের এই উদ্যোগকে একদম রুট-লেভেলে পৌঁছে দিতে সাহায্য করুন। বিভিন্ন স্টুডেন্ট গ্রুপে কমিউনিটি অ্যাওয়ারনেস তৈরি করা, নতুন আর্কাইভ আপডেট শেয়ার করা এবং আপনার কলেজে আমাদের রিপ্রেজেন্ট করাই হবে আপনার কাজ।',
+            'আমাদের এই উদ্যোগকে একদম রুট-লেভেলে পৌঁছে দিতে সাহায্য করুন। বিভিন্ন স্টুডেন্ট গ্রুপে কমিউনিটি অ্যাওয়ারনেস তৈরি করা, নতুন আর্কাইভ আপডেট শেয়ার করা এবং আপনার কলেজে আমাদের রিপ্রেজেন্ট করাই হবে আপনার কাজ।',
         icon: Megaphone,
         iconContainer: 'bg-emerald-50 text-emerald-600',
     },
@@ -23,15 +25,31 @@ const roles = [
         id: 'curator',
         title: 'Resource Curator',
         description:
-            'হাই-কোয়ালিটি এবং কাজের পড়াশোনার ম্যাটেরিয়াল সংগ্রহ ও গুছিয়ে রাখা আপনার কাজ। একদম নিখুঁত বোর্ড কোশ্চেন সেট, প্র্যাক্টিক্যাল রেকর্ডস কালেক্ট করা এবং চ্যাপ্টার ওয়াইজ ডেটা টেমপ্লেট সাজাতে সাহায্য করবেন।',
+            'হাই-কোয়ালিটি এবং কাজের পড়াশোনার ম্যাটেরিয়াল সংগ্রহ ও গুছিয়ে রাখা আপনার কাজ। একদম নিখুঁত বোর্ড কোশ্চেন সেট, প্র্যাক্টিক্যাল রেকর্ডস কালেক্ট করা এবং চ্যাপ্টার ওয়াইজ ডেটা টেমপ্লেট সাজাতে সাহায্য করবেন।',
         icon: FolderHeart,
         iconContainer: 'bg-amber-50 text-amber-700',
+    },
+    {
+        id: 'moderator',
+        title: 'Social Media Moderator',
+        description:
+            'আমাদের ফেসবুক পেজ, গ্রুপ এবং ইনস্টাগ্রাম হ্যান্ডেল অ্যাক্টিভ ও এনগেজিং রাখা আপনার কাজ। স্টুডেন্টদের কমেন্টের ইনস্ট্যান্ট রিপ্লাই দেওয়া, কন্টেন্ট শিডিউল করা এবং মডারেশন গাইডলাইন মেইনটেইন করবেন।',
+        icon: MessageSquare,
+        iconContainer: 'bg-blue-50 text-blue-600',
+    },
+    {
+        id: 'writer',
+        title: 'Blog Writer',
+        description:
+            'আমাদের অফিশিয়াল ব্লগ সেকশনে রেগুলার এডুকেশনাল টিপস, গাইডলাইন, নিউজ এবং স্টুডেন্টদের ইনস্পায়ার করার মতো কন্টেন্ট লিখবেন। কোয়ালিটি রাইটিংয়ের মাধ্যমে স্টুডেন্ট কমিউনিটির সাথে নলেজ শেয়ার করাই হবে মূল কাজ।',
+        icon: PenTool,
+        iconContainer: 'bg-rose-50 text-rose-600',
     },
     {
         id: 'developer',
         title: 'Core Developer',
         description:
-            'আমাদের প্ল্যাটফর্ম আর্কিটেকচার আরও অপ্টিমাইজ করুন। একদম হাইপার-ক্লিন ফ্রন্টএন্ড কম্পোনেন্ট ডিজাইন করা, লেআউট আই-কমফর্ট রিফাইন করা এবং নতুন রেপোজিটরি ফিচার নিয়ে কাজ করবেন।',
+            'আমাদের প্ল্যাটফর্ম আর্কিটেকচার আরও অপ্টিমাইজ করুন। একদম হাইপার-ক্লিন ফ্রন্টএন্ড কম্পোনেন্ট ডিজাইন করা, লেআউট আই-কমফর্ট রিফাইন করা এবং নতুন রেপোজিটরি ফিচার নিয়ে কাজ করবেন।',
         icon: Code2,
         iconContainer: 'bg-purple-50 text-purple-600',
     },
@@ -43,6 +61,15 @@ const currentRoleTitle = computed(() => {
     return (
         roles.find((r) => r.id === selectedRole.value)?.title || 'Team Member'
     );
+});
+
+// ডাইনামিক হোয়াটসঅ্যাপ লিংক জেনারেটর
+const whatsappLink = computed(() => {
+    const baseNumber = '8801909131512';
+    const text = encodeURIComponent(
+        `Hello, I want to join as a ${currentRoleTitle.value}.`,
+    );
+    return `https://wa.me/${baseNumber}?text=${text}`;
 });
 </script>
 
@@ -67,9 +94,9 @@ const currentRoleTitle = computed(() => {
         <p
             class="mx-auto mb-4 max-w-md text-sm font-medium text-slate-800 sm:text-base"
         >
-            সারাদেশের HSC স্টুডেন্টদের কাছে প্রিমিয়াম ও ডিস্ট্রাকশন-ফ্রি লার্নিং
-            এক্সপেরিয়েন্স পৌঁছে দিতে আমাদের সাহায্য করুন। নিচের যেকোনো একটি রোল
-            সিলেক্ট করে আজই যুক্ত হোন।
+            সারাদেশের HSC স্টুডেন্টদের কাছে প্রিমিয়াম ও ডিস্ট্রাকশন-ফ্রি
+            লার্নিং এক্সপেরিয়েন্স পৌঁছে দিতে আমাদের সাহায্য করুন। নিচের যেকোনো
+            একটি রোল সিলেক্ট করে আজই যুক্ত হোন।
         </p>
     </header>
 
@@ -121,7 +148,21 @@ const currentRoleTitle = computed(() => {
                         <p
                             class="mt-1 text-sm leading-relaxed font-medium text-slate-700"
                         >
-                            {{ role.description }}
+                            <template v-if="role.id === 'writer'">
+                                আমাদের অফিশিয়াল
+                                <Link
+                                    href="/blogs"
+                                    class="font-bold text-indigo-600 underline decoration-indigo-200 underline-offset-2 hover:text-indigo-700"
+                                    >blog</Link
+                                >
+                                সেকশনে রেগুলার এডুকেশনাল টিপস, গাইডলাইন, নিউজ
+                                এবং স্টুডেন্টদের ইনস্পায়ার করার মতো কন্টেন্ট
+                                লিখবেন। কোয়ালিটি রাইটিংয়ের মাধ্যমে স্টুডেন্ট
+                                কমিউনিটির সাথে নলেজ শেয়ার করাই হবে মূল কাজ।
+                            </template>
+                            <template v-else>
+                                {{ role.description }}
+                            </template>
                         </p>
                     </div>
                 </div>
@@ -137,7 +178,7 @@ const currentRoleTitle = computed(() => {
                             How to Apply
                         </h2>
                         <p class="text-xs font-medium text-slate-900">
-                            আপনার ব্যাকগ্রাউন্ড বা আগ্রহের কথা জানিয়ে সরাসরি
+                            আপনার ব্যাকগ্রাউন্ড বা আগ্রহের কথা জানিয়ে সরাসরি
                             আমাদের মেসেজ দিন।
                         </p>
                     </div>
@@ -158,10 +199,11 @@ const currentRoleTitle = computed(() => {
                             <p
                                 class="mt-1 text-xs leading-relaxed font-medium text-slate-800"
                             >
-                                আমাদের অনুমোদিত প্রমোটর, কিউরেটর এবং ডেভেলপারদের
-                                অবদানকে সম্মান জানাতে আমাদের অফিশিয়াল
-                                <strong class="text-slate-800">About Us</strong>
-                                পেজে একটি ডেডিকেটেড প্রোফাইল কার্ড স্থায়ীভাবে
+                                আমাদের অনুমোদিত প্রমোটর, কিউরেটর, মডারেটর,
+                                রাইটার এবং ডেভেলপারদের অবদানকে সম্মান জানাতে
+                                আমাদের অফিশিয়াল
+                                <strong class="text-blue-800 underline"><Link href="/about-us">About Us</Link></strong>
+                                পেজে একটি ডেডিকেটেড প্রোফাইল কার্ড স্থায়ীভাবে
                                 যুক্ত করা হবে।
                             </p>
                         </div>
@@ -177,7 +219,7 @@ const currentRoleTitle = computed(() => {
                         </p>
 
                         <a
-                            href="https://wa.me/8801909131512"
+                            :href="whatsappLink"
                             target="_blank"
                             rel="noopener noreferrer"
                             class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-3 text-sm font-bold text-white shadow-sm transition-all hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-500/20 focus:outline-none active:scale-[0.98]"
