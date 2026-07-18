@@ -17,67 +17,61 @@
     use Illuminate\Support\Facades\Route;
 
 
-    Route::middleware('throttle:30,1')->group(function () {
 
 
 
-        Route::prefix('admin')->middleware(['auth', 'verified', 'role:manager|admin|editor'])->name('admin.')->group(function () {
+    Route::prefix('admin')->middleware(['throttle:45,1', 'auth', 'verified', 'permission:view admin'])->name('admin.')->group(function () {
 
-            Route::get('/', [DashboardController::class, 'index'])->name('index');
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
 
-            Route::get('/subjects', [AdminSubjectController::class, 'index'])->name("subjects.index");
-            Route::get('/subjects/create', [AdminSubjectController::class, 'create'])->name("subjects.create");
-            Route::get('/subjects/edit/{subject}', [AdminSubjectController::class, 'edit'])->name("subjects.edit");
+        Route::get('/subjects', [AdminSubjectController::class, 'index'])->name("subjects.index");
+        Route::get('/subjects/create', [AdminSubjectController::class, 'create'])->name("subjects.create");
+        Route::get('/subjects/edit/{subject}', [AdminSubjectController::class, 'edit'])->name("subjects.edit");
 
-            Route::get('/blogs', [AdminBlogController::class, 'index'])->name("blogs.index");
-            Route::get('/blogs/create', [AdminBlogController::class, 'create'])->name("blogs.create");
-            Route::get('/blogs/edit/{blog}', [AdminBlogController::class, 'edit'])->name("blogs.edit");
+        Route::get('/blogs', [AdminBlogController::class, 'index'])->name("blogs.index");
+        Route::get('/blogs/create', [AdminBlogController::class, 'create'])->name("blogs.create");
+        Route::get('/blogs/edit/{blog}', [AdminBlogController::class, 'edit'])->name("blogs.edit");
 
-            Route::get('/subjects/{subject:slug}/nodes/create', [AdminNodeController::class, 'create'])->name('nodes.create');
-            Route::get('/nodes/edit/{node}', [AdminNodeController::class, 'edit'])->name('nodes.edit');
+        Route::get('/subjects/{subject:slug}/nodes/create', [AdminNodeController::class, 'create'])->name('nodes.create');
+        Route::get('/nodes/edit/{node}', [AdminNodeController::class, 'edit'])->name('nodes.edit');
 
-            Route::get('/resources/create', [AdminResourceController::class, 'create']);
-            Route::get('/resources/edit/{resource}', [AdminResourceController::class, 'edit']);
+        Route::get('/resources/create', [AdminResourceController::class, 'create']);
+        Route::get('/resources/edit/{resource}', [AdminResourceController::class, 'edit']);
 
-            Route::get('/users', [AdminUserController::class, 'index'])->name("users.index");
-            Route::get('/users/create', [AdminUserController::class, 'create']);
-            Route::get('/users/edit/{user}', [AdminUserController::class, 'edit']);
+        Route::get('/users', [AdminUserController::class, 'index'])->name("users.index");
+        Route::get('/users/create', [AdminUserController::class, 'create']);
+        Route::get('/users/edit/{user}', [AdminUserController::class, 'edit']);
 
-            Route::get('/notice', [AdminNoticeController::class, 'edit'])->name('notice.edit');
+        Route::get('/notice', [AdminNoticeController::class, 'edit'])->name('notice.edit');
+        Route::get('/subjects/{subject:slug}/nodes/{path?}', [AdminNodeController::class, 'show'])->name('nodes.index')->where('path', '.*');
 
-            Route::get('/subjects/{subject:slug}/nodes/{path?}', [AdminNodeController::class, 'show'])->name('nodes.index')->where('path', '.*');
-        });
+        Route::patch('/subjects/edit/{subject}', [AdminSubjectController::class, 'update'])->middleware("permission:edit subjects")->name("subjects.update");
+        Route::post('/subjects', [AdminSubjectController::class, 'store'])->middleware("permission:create subjects")->name("subjects.store");
 
-        Route::prefix('admin')->middleware(['auth', 'verified', 'role:editor|admin'])->name('admin.')->group(function () {
+        Route::post('/blogs/edit/{blog}/patch', [AdminBlogController::class, 'update'])->middleware("permission:edit blogs")->name("blogs.update");
+        Route::post('/blogs', [AdminBlogController::class, 'store'])->middleware("permission:create blogs")->name("blogs.store");
 
-            Route::patch('/subjects/edit/{subject}', [AdminSubjectController::class, 'update'])->name("subjects.update");
-            Route::post('/subjects', [AdminSubjectController::class, 'store'])->name("subjects.store");
+        Route::post('/subjects/{subject}/nodes', [AdminNodeController::class, 'store'])->middleware("permission:create nodes")->name('nodes.store');
+        Route::patch('/subjects/{subject}/nodes/{node}', [AdminNodeController::class, 'update'])->middleware("permission:edit nodes")->name('nodes.patch');
 
-            Route::post('/blogs/edit/{blog}/patch', [AdminBlogController::class, 'update'])->name("blogs.update");
-            Route::post('/blogs', [AdminBlogController::class, 'store'])->name("blogs.store");
+        Route::post('/resources', [AdminResourceController::class, 'store'])->middleware("permission:create resources");
+        Route::post('/resources/{resource}/patch', [AdminResourceController::class, 'update'])->middleware("permission:edit resources");
 
-            Route::post('/subjects/{subject}/nodes', [AdminNodeController::class, 'store'])->name('nodes.store');
-            Route::patch('/subjects/{subject}/nodes/{node}', [AdminNodeController::class, 'update'])->name('nodes.patch');
+        Route::patch('/notice', [AdminNoticeController::class, 'update'])->middleware("permission:edit notice")->name('notice.update');
+        Route::post('/clear-cache', function () {
+            Cache::flush();
+            return back()->with('success', 'Cache cleared.');
+        })->middleware("permission:clear cache");
 
-            Route::post('/resources', [AdminResourceController::class, 'store']);
-            Route::post('/resources/{resource}/patch', [AdminResourceController::class, 'update']);
+        Route::delete('/resources/{resource}', [AdminResourceController::class, 'destroy'])->middleware("permission:delete resources");
+        Route::delete('/subjects/{subject}', [AdminSubjectController::class, 'destroy'])->middleware("permission:delete subjects");
+        Route::delete('/blogs/{blog}', [AdminBlogController::class, 'destroy'])->middleware("permission:delete blogs");
+        Route::delete('/nodes/{node}', [AdminNodeController::class, 'destroy'])->middleware("permission:delete nodes");
 
-            Route::patch('/notice', [AdminNoticeController::class, 'update'])->name('notice.update');
-            Route::post('/clear-cache', function () {
-                Cache::flush();
-                return back()->with('success', 'Cache cleared.');
-            });
-        });
-
-        Route::prefix('admin')->middleware(['auth', 'verified', 'role:admin'])->name('admin.')->group(function () {
-            Route::delete('/resources/{resource}', [AdminResourceController::class, 'destroy']);
-            Route::delete('/subjects/{subject}', [AdminSubjectController::class, 'destroy']);
-            Route::delete('/blogs/{blog}', [AdminBlogController::class, 'destroy']);
-            Route::delete('/nodes/{node}', [AdminNodeController::class, 'destroy']);
+        Route::middleware('permission:manage users')->group(function () {
             Route::delete('/users/{user}', [AdminUserController::class, 'destroy']);
-
-            Route::post('/users', [AdminUserController::class, 'store'])->name("admin.users.store");
-            Route::patch('/users/{user}', [AdminUserController::class, 'update'])->name("admin.users.update");
+            Route::post('/users', [AdminUserController::class, 'store'])->name("users.store");
+            Route::patch('/users/{user}', [AdminUserController::class, 'update'])->name("users.update");
         });
     });
 
