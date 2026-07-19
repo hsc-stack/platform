@@ -3,11 +3,13 @@ import { Github, Facebook, Instagram } from 'lucide-vue-next';
 
 defineProps({
     member: Object,
+    id: String,
 });
 </script>
 
 <template>
     <div
+        :id="id"
         class="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 text-center transition-all duration-300 hover:border-slate-300 hover:shadow-md hover:shadow-slate-100/50"
     >
         <div class="flex flex-col items-center">
@@ -35,6 +37,19 @@ defineProps({
                 <h3 class="text-xl font-black tracking-tight text-slate-950">
                     {{ member.name }}
                 </h3>
+                <span
+                    class="inline-block rounded-md px-1.5 py-0.5 text-[10px] font-bold tracking-wider uppercase"
+                    :class="{
+                        'border border-rose-100 bg-rose-50 text-rose-600':
+                            member.roles[0].name.toLowerCase() === 'admin',
+                        'border border-blue-100 bg-blue-50 text-blue-600':
+                            member.roles[0].name.toLowerCase() === 'editor',
+                        'border border-amber-100 bg-amber-50 text-amber-600':
+                            member.roles[0].name.toLowerCase() === 'manager',
+                    }"
+                >
+                    {{ member.roles[0].name }}
+                </span>
                 <p
                     class="text-xs font-bold tracking-wide text-indigo-600 uppercase"
                 >
