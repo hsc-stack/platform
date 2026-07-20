@@ -31,12 +31,13 @@ Browsing is open to everyone. But to **contribute**, you need to be an HSCStack 
 
 ## 📚 Resource Types
 
-| Type | Description |
-|------|-------------|
-| **Notes** | Handwritten or typed notes by fellow students |
-| **PDFs** | Formatted documents, guides, and reference sheets |
-| **Images** | Diagrams, charts, and visual study aids |
-| **Videos** | Classes from Youtube |
+| Type       | Description                                       |
+| ---------- | ------------------------------------------------- |
+| **Notes**  | Handwritten or typed notes by fellow students     |
+| **PDFs**   | Formatted documents, guides, and reference sheets |
+| **Images** | Diagrams, charts, and visual study aids           |
+| **Videos** | Classes from Youtube                              |
+
 ---
 
 ## 🚀 Getting Started
@@ -62,12 +63,20 @@ Only HSCStack members can upload resources. To become a member:
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| **Backend** | Laravel (PHP) |
-| **Frontend** | Vue.js via Inertia.js |
-| **Storage** | Public file storage |
+| Layer           | Technology                  |
+| --------------- | --------------------------- |
+| **Backend**     | Laravel (PHP)               |
+| **Frontend**    | Vue.js via Inertia.js       |
+| **Storage**     | Public file storage         |
 | **Admin Panel** | Built-in Laravel admin area |
+
+---
+
+## 📖 Developer Documentation
+
+Additional documentation for developers:
+
+- [Google Drive Backup](docs/google-drive-backup.md)
 
 ---
 
