@@ -10,6 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "google/apiclient": "^2.15",
         "inertiajs/inertia-laravel": "^3.0",
         "laravel/framework": "^13.7",
         "laravel/tinker": "^3.0",
