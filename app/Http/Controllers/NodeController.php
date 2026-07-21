@@ -32,21 +32,21 @@ class NodeController extends Controller
             $parent = $node;
         }
 
-        $nodes = Cache::rememberForever("node_children_{$node->id}", function () use ($node) {
+        $nodes = Cache::remember("node_children_{$node->id}", now()->addDay(), function () use ($node) {
             return Node::where('parent_id', $node->id)
                 ->orderBy('sort_order')
                 ->withCount(['children', 'resources'])
                 ->get(['id', 'name', 'slug'])->toArray();
         });
 
-        $resources = Cache::rememberForever("node_resources_{$node->id}", function () use ($node) {
+        $resources = Cache::remember("node_resources_{$node->id}", now()->addDay(), function () use ($node) {
             return $node->resources()->get()->toArray();
         });
 
         return Inertia::render('Node', [
             'subject' => $subject,
             'nodes' => $nodes,
-            'breadcrumb' => Cache::rememberForever("node_breadcrumb_{$node->id}", function () use ($node) {
+            'breadcrumb' => Cache::remember("node_breadcrumb_{$node->id}", now()->addDay(), function () use ($node) {
                 return $this->buildBreadcrumb($node);
             }),
             'resources' => $resources,
