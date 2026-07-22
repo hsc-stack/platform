@@ -23,6 +23,7 @@ import { Link } from '@inertiajs/vue3';
                         <a
                             href="https://github.com/hscstack"
                             rel="noopener noreferrer"
+                            target="_blank"
                             class="text-slate-400 transition-colors duration-150 hover:text-slate-900"
                             aria-label="GitHub Repository"
                         >
@@ -32,6 +33,7 @@ import { Link } from '@inertiajs/vue3';
                         <a
                             href="https://www.facebook.com/hscstackbd"
                             rel="noopener noreferrer"
+                            target="_blank"
                             class="text-slate-400 transition-colors duration-150 hover:text-blue-600"
                             aria-label="Facebook Page"
                         >
