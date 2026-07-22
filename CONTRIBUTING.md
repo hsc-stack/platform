@@ -10,7 +10,7 @@ HSCStack's codebase is **not open for general, unsolicited pull requests**. To c
 2. Once your application is reviewed and accepted, you'll be onboarded to the codebase.
 3. After that, you're free to open issues, pick up tasks, and submit PRs following the workflow below.
 
-If you're not yet a core developer but found a bug or have a suggestion, please [open a GitHub Issue](https://github.com/trtajim/hsc-stack/issues) instead — no membership required for that.
+If you're not yet a core developer but found a bug or have a suggestion, please [open a GitHub Issue](https://github.com/trtajim/hscstack/issues) instead — no membership required for that.
 
 ## Tech Stack
 
