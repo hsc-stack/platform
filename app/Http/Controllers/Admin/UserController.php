@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -52,7 +54,8 @@ class UserController extends Controller
     {
         return Inertia::render('admin/users/CreateOrEdit', [
             'user' => $user->load(['roles', 'permissions']),
-            'permissions' => Permission::select('name')->get()
+            'permissions' => Permission::select('name')->get(),
+            'shouldHideOptions' => (Auth::id() === $user->id && !Auth::user()->can('manage users')), //hide options when showing own profile && don't have manage user permission.
         ]);
     }
 

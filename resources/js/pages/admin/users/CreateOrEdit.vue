@@ -6,6 +6,7 @@ import { watch } from 'vue';
 const props = defineProps({
     user: Object,
     permissions: Array,
+    shouldHideOptions: Boolean,
 });
 
 const roles = [
@@ -137,7 +138,7 @@ const submitForm = () => {
                         <p v-if="form.errors.password" class="mt-1 text-sm text-rose-600">{{ form.errors.password }}</p>
                     </div>
 
-                    <div>
+                    <div v-if="!shouldHideOptions">
                         <label for="role" class="mb-1.5 block text-sm font-semibold text-slate-700">System Role</label>
                         <select
                             id="role"
@@ -156,7 +157,7 @@ const submitForm = () => {
 
                 <!-- DYNAMIC EDITOR PERMISSIONS SECTION -->
                 <div
-                    v-if="form.role === 'editor'"
+                    v-if="form.role === 'editor' && !shouldHideOptions"
                     class="space-y-3 rounded-xl border border-blue-200 bg-blue-50/30 p-5 transition-all animate-fadeIn"
                 >
                     <div>
