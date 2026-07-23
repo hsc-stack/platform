@@ -137,7 +137,7 @@ Breaking these rules may result in content removal or membership revocation.
 
 Have a question, found a bug, or want to get involved?
 
-- 📧 Email: `hello@tajimz.xyz`
+- 📧 Email: `com.tajim@gmail.com`
 - 🐛 Issues: [Open a GitHub Issue](../../issues)
 
 ---
