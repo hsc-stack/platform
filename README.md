@@ -26,6 +26,7 @@ Browsing is open to everyone. But to **contribute**, you need to be an HSCStack 
 - 🛠️ **Admin Panel** — Full control over subjects, chapters, and resources via a clean admin area.
 - ☁️ **File Upload Support** — Resources are stored and served from public storage.
 - 🆓 **Free to Browse** — No account needed to read or download resources.
+- 📝 **Educational Blog** — Read study tips, announcements, learning guides, and educational articles.
 
 ---
 
